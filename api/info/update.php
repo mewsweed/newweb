@@ -15,7 +15,7 @@
         $stmt = $dbh->prepare("UPDATE info SET
          fname=?, lname=?, birthday=?, phone=?, emerphone=?,
          gender=?, size=?, address=?, province=?, dist=?,
-         subdist=?, zip=?
+         subdist=?, zip=?, blood=?
          where user_id=?");
         $stmt->bindParam(1, $data->fname);
         $stmt->bindParam(2, $data->lname);
@@ -29,7 +29,8 @@
         $stmt->bindParam(10, $data->dist);
         $stmt->bindParam(11, $data->subdist);
         $stmt->bindParam(12, $data->zip);
-        $stmt->bindParam(13, $data->user_id);
+        $stmt->bindParam(13, $data->blood);
+        $stmt->bindParam(14, $data->user_id);
 
         if($stmt->execute()){
             echo json_encode(array("status"=>"ok", "message"=>"User info is updated."));

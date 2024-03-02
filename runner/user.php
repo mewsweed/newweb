@@ -47,10 +47,22 @@
       </li>
     </ul>
   </header>
-  <div class="contanier">
+  <div class="contanier p-4">
     <div class="row text-center mb-3">
       <h1 class=" border-bottom border-4 pb-2">My Profile</h1>
     </div>
+    <form action="" class="mt-3 mb-3 border border-2 p-4 text-center">
+      <h3>อัปโหลดใบหน้า</h3>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control"  placeholder="0" disabled value="<?php echo $_SESSION['id']; ?>">
+        <label for="floatingInput">ID</label>
+      </div>
+      <div>
+        <input type="file" name="face">
+      </div>
+      <button>upload face</button>
+    </form>
+
     <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="id" placeholder="0" disabled>
@@ -89,43 +101,47 @@
           <label for="floatingPassword">lname</label>
         </div>  
         <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="birthday" placeholder="lname">
+          <input type="date" class="form-control" id="birthday" placeholder="birthday">
           <label for="floatingPassword">birthday</label>
         </div>  
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="phone" placeholder="username">
+          <input type="text" class="form-control" id="phone" placeholder="phone">
           <label for="floatingPassword">phone</label>
         </div>  
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="emerphone" placeholder="username">
+          <input type="text" class="form-control" id="emerphone" placeholder="emerphone">
           <label for="floatingPassword">emerphone</label>
         </div>  
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="gender" placeholder="username">
+          <input type="text" class="form-control" id="gender" placeholder="gender">
           <label for="floatingPassword">gender</label>
         </div>  
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="size" placeholder="username">
+          <input type="text" class="form-control" id="blood" placeholder="blood">
+          <label for="floatingPassword">blood</label>
+        </div>  
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="size" placeholder="size">
           <label for="floatingPassword">size</label>
         </div>  
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="address" placeholder="username">
+          <input type="text" class="form-control" id="address" placeholder="address">
           <label for="floatingPassword">address</label>
         </div>  
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="province" placeholder="username">
+          <input type="text" class="form-control" id="province" placeholder="province">
           <label for="floatingPassword">province</label>
         </div>  
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="dist" placeholder="username">
+          <input type="text" class="form-control" id="dist" placeholder="dist">
           <label for="floatingPassword">dist</label>
         </div>  
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="subdist" placeholder="username">
+          <input type="text" class="form-control" id="subdist" placeholder="subdist">
           <label for="floatingPassword">subdist</label>
         </div>  
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="zip" placeholder="username">
+          <input type="text" class="form-control" id="zip" placeholder="zip">
           <label for="floatingPassword">zip</label>
         </div>  
         <div class="row ">
@@ -178,6 +194,7 @@
             document.getElementById("phone").value =jsonObj.phone;
             document.getElementById("emerphone").value =jsonObj.emerphone;
             document.getElementById("gender").value =jsonObj.gender;
+            document.getElementById("blood").value =jsonObj.blood;
             document.getElementById("size").value =jsonObj.size;
             document.getElementById("address").value =jsonObj.address;
             document.getElementById("province").value =jsonObj.province;
@@ -237,6 +254,7 @@
           phone: document.getElementById("phone").value,
           emerphone: document.getElementById("emerphone").value,
           gender: document.getElementById("gender").value,
+          blood: document.getElementById("blood").value,
           size: document.getElementById("size").value,
           address: document.getElementById("address").value,
           province: document.getElementById("province").value,

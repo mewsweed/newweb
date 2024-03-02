@@ -49,7 +49,7 @@
       <div class="row text-center mt-3 mb-3">
         <h1>แก้ไขคำร้องขอจัดงาน</h1>
       </div>
-      <form onsubmit="return false">
+      <form action="">
         <div class="row">
           <div class="col">
             <div class="form-floating mb-3">
@@ -73,10 +73,16 @@
             </div>  
           </div>
           <div class="col-4">
-            <div class="form-floating mb-3">
+            <!-- <div class="form-floating mb-3">
               <input type="text" class="form-control" id="type" placeholder="event name">
               <label for="floatingPassword">ประเภท</label>
-            </div>  
+            </div>   -->
+            <select class="form-select form-select-lg mb-3" id="type">
+              <option selected disabled>ประเภทงาน</option>
+              <option value="เดิน">เดิน</option>
+              <option value="วิ่ง">วิ่ง</option>
+              <option value="มาราทอน">มาราทอน</option>
+            </select>
           </div>
         </div>
         <div class="row">
@@ -160,7 +166,7 @@
           </div>
         </div>
         <div class="row text-center">
-          <div class="col ">
+          <div class="col">
           <button type="button" onclick="request_update()"
            class="btn btn-primary w-100">
             แก้ไขคำร้อง

@@ -5,9 +5,9 @@
     include('../server.php');
     try{
 
-        $request = array();
-        foreach($dbh->query('SELECT * FROM requests')as $row){
-            array_push($request, array(
+        $event = array();
+        foreach($dbh->query('SELECT * FROM events')as $row){
+            array_push($event, array(
                 'id'=> $row['id'],
                 'name'=>$row['name'],
                 'about'=>$row['about'],
@@ -27,7 +27,7 @@
                 
             ));
         }
-        echo json_encode($request);
+        echo json_encode($event);
     
         $dbh = null;
     }catch(PDOException $e){

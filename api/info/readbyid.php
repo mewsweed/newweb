@@ -16,6 +16,7 @@ header("Content-Type: application/json; charset=utf-8");
                 'phone'=> $row['phone'],
                 'emerphone'=> $row['emerphone'],
                 'gender'=> $row['gender'],
+                'blood'=> $row['blood'],
                 'size'=> $row['size'],
                 'address'=> $row['address'],
                 'province'=> $row['province'],

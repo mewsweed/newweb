@@ -2,4 +2,4 @@
 
 $user = "root";
 $pass = "";
-$dbh = new PDO('mysql:host=localhost;dbname=rems_db',$user,$pass);
+$dbh = new PDO('mysql:host=localhost;dbname=new_rems',$user,$pass);

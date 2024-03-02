@@ -18,7 +18,7 @@
     <title><?php echo $_SESSION['role'] ?></title>
   </head>
 
-  <body onload="users_read(); request_read();">
+  <body onload="event_read(); request_read();">
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a
       href="/sos/newweb/index.php"
@@ -84,12 +84,13 @@
             <h5>Request events</h5>
             <thead>
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">Date-Time</th>
-                    <th scope="col">Owner</th>
-                    <th scope="col">manage</th>
+                    <th scope="col">ไอดี</th>
+                    <th scope="col">รูปภาพ</th>
+                    <th scope="col">ชื่องาน</th>
+                    <th scope="col">สถานที่</th>
+                    <th scope="col">วัน/เดือน/ปี และเวลา</th>
+                    <th scope="col">ผู้จัดงาน</th>
+                    <th scope="col">จัดการ</th>
                 </tr>
             </thead>
             <tbody id="request_table">
@@ -108,9 +109,10 @@
               <th scope="col">Date-Time</th>
               <th scope="col">Owner</th>
               <th scope="col">manage</th>
+              
             </tr>
           </thead>
-          <tbody id="users_table"></tbody>
+          <tbody id="events_table"></tbody>
         </table>
       </div>
     </div>
@@ -135,6 +137,7 @@
                 var row = `
                     <tr>
                         <td scope="col">`+request.id+`</td>
+                        <td scope="col"><img src="`+request.coverimg+`" alt="" height="50px"><img src="`+request.mapimg+`" alt="" height="50px"><img src="`+request.rewardimg+`" alt="" height="50px">
                         <td scope="col">`+request.name+`</td>
                         <td scope="col">`+request.address+`</td>
                         <td scope="col">`+request.datetime+`</td>
@@ -152,39 +155,40 @@
         .catch((error) => console.error(error));
     };
 
-  var users_read = function () {
+  var event_read = function () {
     const requestOptions = {
       method: "GET",
       redirect: "follow",
     };
-    var users_table = document.getElementById("users_table");
-    users_table.innerHTML = "loading...";
-    fetch("http://localhost/sos/newweb/api/users/read.php", requestOptions)
+    var events_table = document.getElementById("events_table");
+    events_table.innerHTML = "loading...";
+    fetch("http://localhost/sos/newweb/api/events/read.php", requestOptions)
       .then((response) => response.text())
       .then((result) => {
-        users_table.innerHTML = "";
+        events_table.innerHTML = "";
         var jsonObj = JSON.parse(result);
-        for (let user of jsonObj) {
+        for (let event of jsonObj) {
           var row =
             `
                 <tr>
-                  <td scope="col">` + user.id +`</td>
-                  <td scope="col">` + user.role +`</td>
-                  <td scope="col">` + user.username +`</td>
-                  <td scope="col">` + user.email +`</td>
+                  <td scope="col">` + event.id +`</td>
+                  <td scope="col">` + event.name +`</td>
+                  <td scope="col">` + event.address +`</td>
+                  <td scope="col">` + event.datetime+`</td>
+                  <td scope="col">` + event.owner+`</td>
                   <td scope="col">
-                    <a href="edit_request.php?id=` +user.id +`" class="m-1">Edit</a>
-                    <a href="#" onclick="users_delete(`+user.id+`)">Del</a>
+                    <a href="edit_event.php?id=` +event.id +`" class="m-1">Edit</a>
+                    <a href="#" onclick="event_delete(`+event.id+`)" class="m-1">Del</a>
                   </td>
                 </tr>
             `;
-          users_table.insertAdjacentHTML("beforeend", row);
+          events_table.insertAdjacentHTML("beforeend", row);
         }
       })
       .catch((error) => console.error(error));
     };
 
-  var users_delete =function(id){
+  var events_delete =function(id){
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -199,13 +203,13 @@
       redirect: "follow"
     };
 
-    fetch("http://localhost/sos/newweb/api/users/delete.php", requestOptions)
+    fetch("http://localhost/sos/newweb/api/events/delete.php", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         var jsonObj =JSON.parse(result);
         if (jsonObj.status == "ok"){
           alert("ok");
-          window.location.href = "users.php"
+          window.location.href = "/sos/newweb/admin/event.php"
         }
       })
       .catch((error) => console.error(error));

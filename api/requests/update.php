@@ -12,7 +12,7 @@
     }
     
     try{
-        $stmt = $dbh->prepare("UPDATE request SET
+        $stmt = $dbh->prepare("UPDATE requests SET
          name=?, about=?, datetime=?, type=?, distance=?, cost=?,
           owner=?, address=?, province=?, dist=?, subdist=?, zip=? 
          where id=?");
