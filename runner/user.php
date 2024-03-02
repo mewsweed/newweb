@@ -49,13 +49,12 @@
   </header>
   <div class="contanier p-4">
     <div class="row text-center mb-3">
-      <h1 class=" border-bottom border-4 pb-2">My Profile</h1>
+      <h1 class=" border-bottom border-4 pb-2">บัญชีของฉัน</h1>
     </div>
     <form action="" class="mt-3 mb-3 border border-2 p-4 text-center">
       <h3>อัปโหลดใบหน้า</h3>
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control"  placeholder="0" disabled value="<?php echo $_SESSION['id']; ?>">
-        <label for="floatingInput">ID</label>
+      <div class="border">
+        <img src="" alt="">
       </div>
       <div>
         <input type="file" name="face" id="face">
@@ -301,7 +300,7 @@
           redirect: "follow",
         };
         fetch(
-          "http://localhost/sos/newweb/api/face/update.php",
+          "http://localhost/sos/newweb/api/faces/update.php",
           requestOptions
         )
         .then((response) => response.text())

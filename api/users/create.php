@@ -49,12 +49,22 @@
         $stmt_info = $dbh->prepare("INSERT INTO info (user_id) VALUE (?)");
         $stmt_info->bindParam(1, $user_id);
 
+        $stmt_face = $dbh->prepare(("INSERT INTO face (user_id) VALUE (?)"));
+        $stmt_face->bindParam(1, $user_id);
+
         if($stmt_info->execute()){
             $dbh->commit(); // ยืนยันการทำงานแบบแปรผัน
             echo json_encode(array("status"=>"ok", "message"=>"User created successfully."));
         } else {
             $dbh->rollBack(); // ยกเลิกการทำงานแบบแปรผัน
             echo json_encode(array("status"=>"error", "message"=>"Can't create user."));
+        }
+        if($stmt_face->execute()){
+            $dbh->commit();
+            echo json_encode(array("status"=>"ok", "message"=>"User created suscessfully."));
+        } else {
+            $dbh->rollBack();
+            echo json_encode(array("status"=>"ok", "message"=>"Can't create user."));
         }
         $dbh = null;
     
