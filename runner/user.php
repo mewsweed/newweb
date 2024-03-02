@@ -58,9 +58,9 @@
         <label for="floatingInput">ID</label>
       </div>
       <div>
-        <input type="file" name="face">
+        <input type="file" name="face" id="face">
       </div>
-      <button>upload face</button>
+      <button type="button" onclick="face_update()">upload face</button>
     </form>
 
     <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
@@ -283,6 +283,38 @@
             }
           })
         .catch((error) => console.error(error));
+      }
+
+      var face_update = function(){
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+        const fileInput = document.querySelector('input[type="file"]');
+        const file =fileInput.files[0]
+
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('face', file);
+
+        const requestOptions = {
+          method: "POST",
+          body: formData,
+          redirect: "follow",
+        };
+        fetch(
+          "http://localhost/sos/newweb/api/face/update.php",
+          requestOptions
+        )
+        .then((response) => response.text())
+        .then((result) => {
+          var jsonObj =JSON.parse(result)
+          if (jsonObj.status == "ok"){
+            alert(jsonObj.message);
+            window.location.reload()
+          }else{
+            alert(jsonObj.message);
+          }
+        })
+        .catch((error) => console.error(error))
       }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
