@@ -18,7 +18,7 @@
     <title><?php echo $_SESSION['role'] ?></title>
   </head>
 
-  <body onload="event_read(); request_read();">
+  <body onload="event_read(); ">
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a
       href="/sos/newweb/index.php"
@@ -61,7 +61,7 @@
         <button
           type="button"
           class="btn btn-primary"
-          onclick="window.open('create_event.php')"
+          onclick="window.open('create/event.php')"
         >
           Create Event
         </button>
@@ -100,15 +100,16 @@
       </div>
       <div class="row">
         <table class="table">
-            <h5>Events</h5>
+            <h5>งานวิ่ง</h5>
           <thead>
             <tr>
-              <th scope="col">Id</th>
-              <th scope="col">Name</th>
-              <th scope="col">Location</th>
-              <th scope="col">Date-Time</th>
-              <th scope="col">Owner</th>
-              <th scope="col">manage</th>
+              <th scope="col">ไอดี</th>
+              <th scope="col">ชื่องาน</th>
+              <th scope="col">สถานที่</th>
+              <th scope="col">วัน เวลา</th>
+              <th scope="col">ผู้จัด</th>
+              <th scope="col">สถานะ</th>
+              <th scope="col">จัดการ</th>
               
             </tr>
           </thead>
@@ -176,8 +177,9 @@
                   <td scope="col">` + event.address +`</td>
                   <td scope="col">` + event.datetime+`</td>
                   <td scope="col">` + event.owner+`</td>
+                  <td scope="col">` + event.status+`</td>
                   <td scope="col">
-                    <a href="edit_event.php?id=` +event.id +`" class="m-1">Edit</a>
+                    <a href="edit/event.php?id=` +event.id +`" class="m-1">Edit</a>
                     <a href="#" onclick="event_delete(`+event.id+`)" class="m-1">Del</a>
                   </td>
                 </tr>
@@ -188,7 +190,7 @@
       .catch((error) => console.error(error));
     };
 
-  var events_delete =function(id){
+  var event_delete =function(id){
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 

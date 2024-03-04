@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // ตรวจสอบว่ามีไฟล์ถูกส่งมาหรือไม่
     if (isset($_FILES['coverimg']) && isset($_FILES['mapimg']) && isset($_FILES['rewardimg'])) {
         // กำหนดโฟลเดอร์ที่จะบันทึกไฟล์รูป
-        $targetDir = "uploads/";
+        $targetDir = "../../uploads/";
         
         // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันเป็นส่วนหลังของชื่อไฟล์เพื่อป้องกันชื่อไฟล์ซ้ำ
         $coverimgName = uniqid() . "_" . basename($_FILES["coverimg"]["name"]);
@@ -18,9 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $rewardimgName = uniqid() . "_" . basename($_FILES["rewardimg"]["name"]);
         
         // กำหนด path ของไฟล์ที่จะบันทึกลงในโฟลเดอร์
-        $coverimgPath = "../" . $targetDir . $coverimgName;
-        $mapimgPath = "../" . $targetDir . $mapimgName;
-        $rewardimgPath = "../" . $targetDir . $rewardimgName;
+        $coverimgPath =  $targetDir . $coverimgName;
+        $mapimgPath =  $targetDir . $mapimgName;
+        $rewardimgPath =  $targetDir . $rewardimgName;
         
         // อัพโหลดไฟล์รูปลงในโฟลเดอร์
         if (move_uploaded_file($_FILES["coverimg"]["tmp_name"], $coverimgPath) &&
@@ -28,15 +28,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             move_uploaded_file($_FILES["rewardimg"]["tmp_name"], $rewardimgPath)) {
             // สร้าง array เพื่อเก็บ path ของไฟล์รูป
             $imagePaths = array(
-                "coverimg" => $coverimgPath,
-                "mapimg" => $mapimgPath,
-                "rewardimg" => $rewardimgPath
+                "coverimg" => $coverimgName,
+                "mapimg" => $mapimgName,
+                "rewardimg" => $rewardimgName
             );
             
-            // ส่ง path ของไฟล์รูปกลับมาให้ JavaScript ในรูปแบบ JSON
-            $_SESSION['coverimg'] = $coverimgPath;
-            $_SESSION['mapimg'] = $mapimgPath;
-            $_SESSION['rewardimg'] = $rewardimgPath;
+            // // ส่ง path ของไฟล์รูปกลับมาให้ JavaScript ในรูปแบบ JSON
+            // $_SESSION['coverimg'] = $coverimgPath;
+            // $_SESSION['mapimg'] = $mapimgPath;
+            // $_SESSION['rewardimg'] = $rewardimgPath;
 
             echo json_encode($imagePaths);
             // echo "<script>window.location.href = '/sos/newweb/admin/create_request.php'</script>";

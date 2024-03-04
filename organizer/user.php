@@ -1,12 +1,6 @@
 <?php
   session_start();
-  if(!isset($_SESSION['role'])){
-    header("Location: /sos/newweb/login.php");
-  }else{
-    if($_SESSION['role'] !== 'runner'){
-      header("Location: /sos/newweb/login.php");
-    }
-  }
+
 ?>
 
 <!doctype html>
@@ -20,8 +14,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Runner Profile</title>
-    <style>
-    </style>
   </head>
   <body onload="user_readone(); info_readone(); face_readone();">
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -32,7 +24,7 @@
       <svg class="bi me-2" width="40" height="32">
         <use xlink:href="#bootstrap"></use>
       </svg>
-      <span class="fs-4">นักวิ่ง</span>
+      <span class="fs-4">ผู้จัดงาน</span>
     </a>
 
     <ul class="nav nav-pills">
@@ -66,30 +58,29 @@
           <h3>อัปโหลดใบหน้า</h3>
           <input style="display: none;" type="text" name="id" id="faceId" readonly>
 
-          <div class="border py-2 border-2" id="imageContainer">
+          <div class="border py-2" id="imageContainer">
             <img id="selectedImage" src="" alt=""  height="200px">
           </div>
           <div>
             <input type="file" name="face" id="face" onchange="previewImage(event)">
           </div>
 
-          <button class="btn btn-primary" type="submit">อัปโหลดใบหน้า</button>
+          <button class="btn btn-primary" type="submit">upload face</button>
         </form>
       </div>
-      <div class="col border p-4 text-center">
-          <h3>รูปใบหน้า</h3>
+      <div class="col border">
         <div class="row mb-2" id="image_container">
 
         </div>  
         <div class="row">
           <div class="d-flex justify-content-end align-items-end">
-            <button class="btn-sm btn-warning" onclick="">รีเซ็ทใบหน้า</button>
+            <button class="btn-sm btn-warning">Reset Face</button>
           </div>
         </div>
       </div>
       </div>
     
-    <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
+      <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
         <div class="row">
           <div class="col-sm-6">
             <div class="form-floating mb-3">
@@ -207,6 +198,7 @@
             .then((result) => {
               var jsonObj = JSON.parse(result);
               document.getElementById('faceId').value = jsonObj.id;
+
               document.getElementById("id").value = jsonObj.id;
               document.getElementById("email").value = jsonObj.email;
               document.getElementById("username").value = jsonObj.username;
@@ -231,7 +223,7 @@
                 // alert(`${face.face}`)
                 const imagePath = `/sos/newweb/uploads/runner/${face.face}`;
                 imageHTML += `<div class="col">`
-                imageHTML += `<img src="${imagePath}" class="img-fluid" alt="face image" >`;
+                imageHTML += `<img src="${imagePath}" alt="face image" width="100px">`;
                 // imageHTML += 
                 imageHTML += `</div>`
             });
@@ -262,37 +254,15 @@
             document.getElementById("birthday").value =jsonObj.birthday;
             document.getElementById("phone").value =jsonObj.phone;
             document.getElementById("emerphone").value =jsonObj.emerphone;
-            // document.getElementById("gender").value =jsonObj.gender;
-            // document.getElementById("blood").value =jsonObj.blood;
-            // document.getElementById("size").value =jsonObj.size;
+            document.getElementById("gender").value =jsonObj.gender;
+            document.getElementById("blood").value =jsonObj.blood;
+            document.getElementById("size").value =jsonObj.size;
             document.getElementById("address").value =jsonObj.address;
             document.getElementById("province").value =jsonObj.province;
             document.getElementById("dist").value =jsonObj.dist;
             document.getElementById("subdist").value =jsonObj.subdist;
             document.getElementById("zip").value =jsonObj.zip;
 
-                // เช็คค่า jsonObj.gender แล้วตั้งค่า selected ให้กับ option ที่ตรงกัน
-            var selectGender = document.getElementById("gender");
-            for (var i = 0; i < selectGender.options.length; i++) {
-                if (selectGender.options[i].value === jsonObj.gender) {
-                    selectGender.options[i].setAttribute("selected", "selected");
-                }
-            }
-                // เช็คค่า jsonObj.blood แล้วตั้งค่า selected ให้กับ option ที่ตรงกัน
-            var selectBlood = document.getElementById("blood");
-            for (var j = 0; j < selectBlood.options.length; j++) {
-                if (selectBlood.options[j].value === jsonObj.blood) {
-                    selectBlood.options[j].setAttribute("selected", "selected");
-                }
-            }
-
-            var selectSize = document.getElementById("size");
-            for (var k = 0; k < selectSize.options.length; k++) {
-                if (selectSize.options[k].value === jsonObj.size) {
-                    selectSize.options[k].setAttribute("selected", "selected");
-                }
-            }
-            
           })
           .catch((error) => console.error(error));
         };

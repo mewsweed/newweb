@@ -2,8 +2,7 @@
 
 if(isset($_SESSION['role'])){
 
-}else{
-  
+}else{ 
   header("Location: /sos/newweb/login.php");
 }
 
@@ -28,67 +27,84 @@ if(isset($_SESSION['role'])){
       <div class="row text-center mt-3 mb-3">
         <h1>Create Request Events</h1>
       </div>
-      <form action="./upload-img.php" method="post" enctype="multipart/form-data" class="mb-3" >
+
+      <form action="" method="post" enctype="multipart/form-data" class="mb-3" >
         <div class="row text-center" >
-          <?php if(isset($_SESSION['coverimg'])){ ?>
           <div class="col-md">
-            <h4>ภาพปกงาน</h4>
-            <img src="<?php echo $_SESSION['coverimg']; ?>" alt="" class="img-thumbnail" id="coverimg">
-            <input type="text" id="coverimgpath" value="<?php echo $_SESSION['coverimg']; ?>">
+            <h4>ปกงาน</h4>
+            <img src="" alt="" class="img-thumbnail" id="coverImage">
+            <input type="text" id="coverimgpath" value="">
           </div>
-            <?php } ?>
-            <?php if(isset($_SESSION['mapimg'])){ ?>
             <div class="col-md">
-            <img src="<?php echo $_SESSION['mapimg']; ?>" alt="" class="img-thumbnail" id="mapimg">
-              <input type="text" id="mapimgpath" value="<?php echo $_SESSION['mapimg']; ?>">
+            <h4>แผนที่</h4>
+              <img src="" alt="" class="img-thumbnail" id="mapImage">
+              <input type="text" id="mapimgpath" value="">
             </div>
-            <?php } ?>
-            <?php if(isset($_SESSION['rewardimg'])){ ?>
             <div class="col-md">
-            <img src="<?php echo $_SESSION['rewardimg']; ?>" alt="" class="img-thumbnail" id="rewardimg">
-              <input type="text" id="rewardimgpath" value="<?php echo $_SESSION['rewardimg']; ?>">
+            <h4>รางวัล</h4>
+            <img src="" alt="" class="img-thumbnail" id="rewardImage">
+              <input type="text" id="rewardimgpath" value="">
             </div>
-            <?php } ?>
+            <div class="col-md">
+            <h4>การชำระเงิน</h4>
+            <img src="" alt="" class="img-thumbnail" id="paymentImage">
+              <input type="text" id="paymentimgpath" value="">
+            </div>
         </div>
       <div class="row text-center mt-2">
           <div class="col-lg">
             <div class="mb-3">
               <label for="formFile" class="form-label">ภาพปกงาน</label>
-              <input class="form-control" type="file" name="coverimg">
+              <input class="form-control" type="file" name="coverimg" onchange="showCoverImg()">
             </div>
           </div>
           <div class="col-lg">
             <div class="row">
             <div class="mb-3">
               <label for="formFile" class="form-label"><h4>แผนที่ / เส้นทางวิ่ง</h4></label>
-              <input class="form-control" type="file" name="mapimg">
+              <input class="form-control" type="file" name="mapimg" onchange="showMapImg()">
             </div>
             </div>
           </div>
           <div class="col-lg">
             <div class="mb-3">
               <label for="formFile" class="form-label"><h4>ของรางวัล</h4></label>
-              <input class="form-control" type="file" name="rewardimg">
+              <input class="form-control" type="file" name="rewardimg" onchange="showRewardImg()">
+            </div>
+          </div>
+          <div class="col-lg">
+            <div class="mb-3">
+              <label for="formFile" class="form-label"><h4>การชำระเงิน</h4></label>
+              <input class="form-control" type="file" name="paymentimg" onchange="showPaymentImg()">
             </div>
           </div>
         </div>
         <div class="row px-4">
-          <button type="submit" class="btn btn-primary">Upload</button>
+          <button type="submit" name="submitimg" class="btn btn-primary">Upload</button>
         </div>
       </form>
+
+
       <form onsubmit="return false">
         <div class="row">
-          <div class="col">
+          <div class="col-sm-5">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="id" placeholder="0" disabled>
               <label for="floatingInput">ไอดีคำร้องขอจัดงาน</label>
             </div>
           </div>
-          <div class="col">
+          <div class="col-sm-5">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="owner" placeholder="owner" disabled value="<?php echo $_SESSION['email'] ?>" >
               <label for="floatingPassword">ผู้จัดงาน</label>
             </div>  
+          </div>
+          <div class="col">
+            <select class="form-select form-select-lg mb-3" id="photo">
+                <option selected disabled>ช่างภาพ</option>
+                <option value="1">รับ</option>
+                <option value="0">ไม่รับ</option>
+              </select>
           </div>
         </div>
 
@@ -209,6 +225,9 @@ if(isset($_SESSION['role'])){
           coverimg: document.getElementById("coverimgpath").value,
           mapimg: document.getElementById("mapimgpath").value,
           rewardimg: document.getElementById("rewardimgpath").value,
+          paymentimg: document.getElementById("paymentimgpath").value,
+          photo: document.getElementById("photo").value,
+          status: 'รออนุมัติ'
         });
 
         const requestOptions = {
@@ -219,7 +238,7 @@ if(isset($_SESSION['role'])){
         };
 
         fetch(
-          "http://localhost/sos/newweb/api/requests/create.php",
+          "http://localhost/sos/newweb/api/events/create.php",
           requestOptions
         )
           .then((response) => response.text())
@@ -234,6 +253,127 @@ if(isset($_SESSION['role'])){
           })
           .catch((error) => console.error(error));
       };
+
     </script>
+
+<script>
+function showCoverImg() {
+  var input = document.querySelector('input[name="coverimg"]');
+  var img = document.getElementById('coverImage');
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function showMapImg() {
+  var input = document.querySelector('input[name="mapimg"]');
+  var img = document.getElementById('mapImage');
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function showRewardImg() {
+  var input = document.querySelector('input[name="rewardimg"]');
+  var img = document.getElementById('rewardImage');
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function showPaymentImg() {
+  var input = document.querySelector('input[name="paymentimg"]');
+  var img = document.getElementById('paymentImage');
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>
   </body>
 </html>
+<?php
+$imagePaths = array();
+if(isset($_POST['submitimg'])){
+  if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // ตรวจสอบว่ามีไฟล์ถูกส่งมาหรือไม่
+    if (isset($_FILES['coverimg']) && isset($_FILES['mapimg']) && isset($_FILES['rewardimg']) && isset($_FILES['paymentimg'])){
+        // กำหนดโฟลเดอร์ที่จะบันทึกไฟล์รูป
+        $targetDir = "../../uploads/asset/";
+        
+        // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันเป็นส่วนหลังของชื่อไฟล์เพื่อป้องกันชื่อไฟล์ซ้ำ
+        $coverimgName = uniqid() . "_" . basename($_FILES["coverimg"]["name"]);
+        $mapimgName = uniqid() . "_" . basename($_FILES["mapimg"]["name"]);
+        $rewardimgName = uniqid() . "_" . basename($_FILES["rewardimg"]["name"]);
+        $paymentimgName = uniqid() . "_" . basename($_FILES["paymentimg"]["name"]);
+        
+        // กำหนด path ของไฟล์ที่จะบันทึกลงในโฟลเดอร์
+        $coverimgPath =  $targetDir . $coverimgName;
+        $mapimgPath =  $targetDir . $mapimgName;
+        $rewardimgPath =  $targetDir . $rewardimgName;
+        $paymentimgPath =  $targetDir . $paymentimgName;
+        
+        // อัพโหลดไฟล์รูปลงในโฟลเดอร์
+        if (move_uploaded_file($_FILES["coverimg"]["tmp_name"], $coverimgPath) &&
+            move_uploaded_file($_FILES["mapimg"]["tmp_name"], $mapimgPath) &&
+            move_uploaded_file($_FILES["rewardimg"]["tmp_name"], $rewardimgPath) &&
+            move_uploaded_file($_FILES["paymentimg"]["tmp_name"], $paymentimgPath)) {
+            // สร้าง array เพื่อเก็บ path ของไฟล์รูป
+            $imagePaths = array(
+                "coverimg" => $coverimgName,
+                "mapimg" => $mapimgName,
+                "rewardimg" => $rewardimgName,
+                "paymentimg" => $paymentimgName
+            );
+            
+        } else {
+            // กรณีอัพโหลดไม่สำเร็จ
+            echo json_encode(array("error" => "Failed to upload files."));
+        }
+    } else {
+        // กรณีไม่มีไฟล์รูปถูกส่งมา
+        echo json_encode(array("error" => "No files uploaded."));
+    }
+} else {
+    // กรณีไม่ใช่เมธอด POST
+    echo json_encode(array("error" => "Only POST requests are allowed."));
+}
+}
+
+?>
+<script>
+// เรียกใช้ JSON ที่ส่งกลับมา
+var imagePathsJSON = <?php echo json_encode($imagePaths); ?>;
+
+// เข้าถึง path ของไฟล์รูปแต่ละประเภท
+var coverimgPath = imagePathsJSON.coverimg;
+var mapimgPath = imagePathsJSON.mapimg;
+var rewardimgPath = imagePathsJSON.rewardimg;
+var paymentimgPath = imagePathsJSON.paymentimg;
+
+// นำ path ไปใช้งานตามต้องการ เช่น ใช้ในการแสดงรูปภาพใน HTML
+document.getElementById("coverImage").src = "../../uploads/asset/"+ coverimgPath;
+document.getElementById("mapImage").src = "../../uploads/asset/"+ mapimgPath;
+document.getElementById("rewardImage").src =  "../../uploads/asset/"+ rewardimgPath;
+document.getElementById("paymentImage").src =  "../../uploads/asset/"+ paymentimgPath;
+// นำ path ไปใช้งานตามต้องการ เช่น ใช้ในการแสดงรูปภาพใน HTML
+document.getElementById("coverimgpath").value = coverimgPath;
+document.getElementById("mapimgpath").value = mapimgPath;
+document.getElementById("rewardimgpath").value = rewardimgPath;
+document.getElementById("paymentimgpath").value = paymentimgPath;
+</script>

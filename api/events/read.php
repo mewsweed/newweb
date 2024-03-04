@@ -24,6 +24,9 @@
                 'coverimg'=>$row['coverimg'],
                 'mapimg'=>$row['mapimg'],
                 'rewardimg'=>$row['rewardimg'],
+                'paymentimg'=>$row['paymentimg'],
+                'status'=>$row['status'],
+                'photo'=>$row['photo']
                 
             ));
         }

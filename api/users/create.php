@@ -19,14 +19,16 @@
         $stmt_check_email->bindParam(1, $data->email);
         $stmt_check_email->execute();
         $result = $stmt_check_email->fetch(PDO::FETCH_ASSOC);
-        
+            
         if ($result['count'] > 0) {
             echo json_encode(array("status"=>"error", "message"=>"Email already exists"));
+            $dbh->rollBack();
             die();
         } 
 
         if ($data->password !== $data->confirm_password) {
             echo json_encode(array("status"=>"error", "message"=>"Passwords do not match"));
+            $dbh->rollBack();
             die();
         }
 
@@ -40,7 +42,7 @@
         $stmt->bindParam(4, $data->role);
 
         if(!$stmt->execute()){
-            $dbh->rollBack(); // ยกเลิกการทำงานแบบแปรผัน
+            $dbh->rollBack(); 
             echo json_encode(array("status"=>"error", "message"=>"Can't create user."));
             die();
         }
@@ -49,22 +51,15 @@
         $stmt_info = $dbh->prepare("INSERT INTO info (user_id) VALUE (?)");
         $stmt_info->bindParam(1, $user_id);
 
-        $stmt_face = $dbh->prepare(("INSERT INTO face (user_id) VALUE (?)"));
+        $stmt_face = $dbh->prepare("INSERT INTO face (user_id) VALUE (?)");
         $stmt_face->bindParam(1, $user_id);
 
-        if($stmt_info->execute()){
-            $dbh->commit(); // ยืนยันการทำงานแบบแปรผัน
+        if($stmt_info->execute() && $stmt_face->execute()){
+            $dbh->commit(); 
             echo json_encode(array("status"=>"ok", "message"=>"User created successfully."));
         } else {
-            $dbh->rollBack(); // ยกเลิกการทำงานแบบแปรผัน
+            $dbh->rollBack(); 
             echo json_encode(array("status"=>"error", "message"=>"Can't create user."));
-        }
-        if($stmt_face->execute()){
-            $dbh->commit();
-            echo json_encode(array("status"=>"ok", "message"=>"User created suscessfully."));
-        } else {
-            $dbh->rollBack();
-            echo json_encode(array("status"=>"ok", "message"=>"Can't create user."));
         }
         $dbh = null;
     

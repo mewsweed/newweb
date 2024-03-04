@@ -12,18 +12,30 @@
         die();
     }
     
-    try{
-        $stmt = $dbh->prepare("DELETE FROM users where id=?");
+    try {
+        $dbh->beginTransaction();
+    
+        // ทำการลบข้อมูลในตารางที่มี foreign key ชี้ไปยังตารางหลัก
+        $stmt_face = $dbh->prepare("DELETE FROM face WHERE user_id = ?");
+        $stmt_face->bindParam(1, $data->id);
+        $stmt_face->execute();
+        // ทำการลบข้อมูลในตารางที่มี foreign key ชี้ไปยังตารางหลัก
+        $stmt_info = $dbh->prepare("DELETE FROM info WHERE user_id = ?");
+        $stmt_info->bindParam(1, $data->id);
+        $stmt_info->execute();
+        
+        // ทำการลบข้อมูลในตารางหลัก
+        $stmt = $dbh->prepare("DELETE FROM users WHERE id = ?");
         $stmt->bindParam(1, $data->id);
-
-        if($stmt->execute()){
-            echo json_encode(array("status"=>"ok"));
-        }else{
-            echo json_encode(array("status"=>"error"));
-        }
-        $dbh = null;
-    }catch(PDOException $e){
-        print "Error: " . $e->getMessage() ."<br/>";
-        die();
+        $stmt->execute();
+    
+        // ยืนยันการทำรายการ
+        $dbh->commit();
+    
+        echo json_encode(array("status"=>"ok", "message"=>"Deleted"));
+    } catch (PDOException $e) {
+        // ถ้ามีข้อผิดพลาดเกิดขึ้น ทำการยกเลิกรายการ
+        $dbh->rollBack();
+        echo json_encode(array("status"=>"error", "message"=>$e->getMessage()));
     }
-
+    

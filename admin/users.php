@@ -94,7 +94,7 @@
     var users_table = document.getElementById("users_table");
     users_table.innerHTML = "loading...";
     fetch("http://localhost/sos/newweb/api/users/read.php", requestOptions)
-      .then((response) => response.text())
+      .then((response) => response.text() )
       .then((result) => {
         users_table.innerHTML = "";
         var jsonObj = JSON.parse(result);

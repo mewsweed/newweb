@@ -1,31 +1,12 @@
 <?php 
   session_start();
 
-  // if(isset($_SESSION['role'])){
-  //   if($_SESSION['role'] !== 'admin'){
-  //     header("Location: /sos/newweb/login.php");
-  //   }
-  // }
-
-  if(isset($_FILES['coverimg'])){
-    $file = $_FILES['coverimg'];
-
-    if($file['error'] === UPLOAD_ERR_OK){
-
-      $uploadDir = 'uploads/';
-      $uploadFile = $uploadDir . basename($file['name']);
-
-      if(move_uploaded_file($file['tmp_name'], $uploadFile)) {
-        $imageUrl = 'http://localhost/sos/newweb/'. $uploadFile;
-        echo json_encode(["status"=>"success"]);
-      }else{
-        echo json_encode(["status"=>"error"]);
-      }
-
-    }else{
-      echo json_encode(["status"=>"error"]);
+  if(isset($_SESSION['role'])){
+    if($_SESSION['role'] !== 'admin'){
+      header("Location: /sos/newweb/login.php");
     }
   }
+
 ?>
 
 <!DOCTYPE html>
