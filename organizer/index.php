@@ -97,7 +97,7 @@
         <a href="/sos/newweb/organizer/user.php?id=<?php echo $_SESSION['id'] ?>" class="nav-link">บัญชีผู้ใช้</a>
       </li>
       <li class="nav-item">
-        <a href="/sos/newweb/organizer/event.php" class="nav-link">กิจกรรมงานวิ่ง</a>
+        <a href="/sos/newweb/organizer/create/event.php" class="nav-link">กิจกรรมงานวิ่ง</a>
       </li>
       <li class="nav-item">
         <a href="/sos/newweb/api/logout.php" class="nav-link" >ลงชื่อออก</a>
@@ -109,8 +109,8 @@
       <h3>อีเว้นต์ของฉัน</h3>
     </div>
     <div class="row mb-3">
+      <h5><?php echo $_SESSION['email'] ?></h5>
         <table class="table">
-            <h5><?php echo $_SESSION['email'] ?></h5>
             <thead>
                 <tr>
                     <th scope="col">ไอดี</th>
@@ -152,7 +152,7 @@
               <td>${event.address} ${event.province}</td>
               <td>${event.distance}</td>
               <td>${event.cost}</td>
-              <td><button class=btn-success onclick="window.location.href=''" >ผู้เข้าร่วม</button></td>
+              <td><button class=btn-success onclick="window.location.href='eventinfo.php?id=${event.id}'" >ผู้เข้าร่วม</button></td>
             </tr>
           `;
           myevent_table.insertAdjacentHTML("beforeend", row);

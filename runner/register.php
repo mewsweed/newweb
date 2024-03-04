@@ -7,6 +7,7 @@ if (isset($_POST['submit'])) {
         $user_id = $_POST['user_id'];
         $event_id = $_POST['event_id'];
         $size = $_POST['size'];
+        $ship = $_POST['ship'];
 
         // เช็คว่า user_id นี้เคยสมัคร event_id นี้แล้วหรือไม่
         $stmt_check = $dbh->prepare("SELECT COUNT(*) AS total FROM event_joined WHERE user_id = :user_id AND event_id = :event_id");
@@ -39,12 +40,13 @@ if (isset($_POST['submit'])) {
             $runNo = $row['total'] + 1; // นับแล้วเพิ่ม 1
 
             // เพิ่มข้อมูลลงในตาราง event_joined
-            $stmt = $dbh->prepare("INSERT INTO event_joined (user_id, event_id, runNo, size, paid) VALUES (:user_id, :event_id, :runNo, :size, :paid)");
+            $stmt = $dbh->prepare("INSERT INTO event_joined (user_id, event_id, runNo, size, paid ,ship) VALUES (:user_id, :event_id, :runNo, :size, :paid :ship)");
             $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
             $stmt->bindParam(':runNo', $runNo, PDO::PARAM_INT);
             $stmt->bindParam(':size', $size, PDO::PARAM_STR);
             $stmt->bindParam(':paid', $paid_base64, PDO::PARAM_STR);
+            $stmt->bindParam(':ship', $ship, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
                 // การส่งไปยังหน้าเว็บหลังจากสำเร็จ

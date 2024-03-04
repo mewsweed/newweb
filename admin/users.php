@@ -33,7 +33,7 @@
     <ul class="nav nav-pills">
       <li class="nav-item">
         <a
-          href="/sos/newweb/index.php"
+          href="/sos/newweb/admin/index.php"
           class="nav-link "
           aria-current="page"
           >หน้าแรก</a

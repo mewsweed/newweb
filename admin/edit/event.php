@@ -22,13 +22,13 @@ if(isset($_SESSION['role'])){
 
     <title>ADMIN Edit</title>
   </head>
-  <body onload="event_readone()">
+  <body>
     <div class="container">
       <div class="row text-center mt-3 mb-3">
         <h1>Edit Events</h1>
       </div>
 
-      <form action="" method="post" enctype="multipart/form-data" class="mb-3" >
+      <!-- <form action="" method="post" enctype="multipart/form-data" class="mb-3" >
         <div class="row text-center" >
           <div class="col-md">
             <h4>ปกงาน</h4>
@@ -82,28 +82,28 @@ if(isset($_SESSION['role'])){
         <div class="row px-4">
           <button type="submit" name="submitimg" class="btn btn-primary">Upload</button>
         </div>
-      </form>
+      </form> -->
 
 
       <form onsubmit="return false">
         <div class="row">
           <div class="col-sm-5">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="id" placeholder="0" disabled>
+              <input type="text" class="form-control" id="id" placeholder="0" readonly>
               <label for="floatingInput">ไอดีคำร้องขอจัดงาน</label>
             </div>
           </div>
           <div class="col-sm-5">
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="owner" placeholder="owner" disabled " >
+              <input type="text" class="form-control" id="owner" placeholder="owner" readonly>
               <label for="floatingPassword">ผู้จัดงาน</label>
             </div>  
           </div>
           <div class="col">
-            <select class="form-select form-select-lg mb-3" id="photo">
+            <select class="form-select form-select-lg mb-3" id="photo" placeholder="ช่างภาพ">
                 <option selected disabled>ช่างภาพ</option>
-                <option value="1">รับ</option>
-                <option value="0">ไม่รับ</option>
+                <option value=0>ไม่รับช่างภาพ</option>
+                <option value=1>รับช่างภาพ</option>
               </select>
           </div>
         </div>
@@ -188,19 +188,31 @@ if(isset($_SESSION['role'])){
         
         <div class="row text-center">
           <div class="col ">
-          <button type="button" onclick="request_create()"
+          <button type="button" onclick="event_update()"
            class="btn btn-primary w-100">
             แก้ไขคำร้อง
           </button>
           </div>
-          <div class="col" id="delBtn">
-
+          <div class="col" id="">
+            <label for="">สถานะ</label>
+            <select id="status">
+              <option value="รออนุมัติ">รออนุมัติ</option>
+              <option value="อนุมัติ">อนุมัติ</option>
+              <option value="ไม่อนุมัติ">ไม่อนุมัติ</option>
+            </select>
           </div>
 
         </div>
       </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        event_readone();
+            // นำ URL ของรูปภาพที่ได้รับมาแสดงใน tag img ต่างๆ
+      });
+
+    </script>
     <script>
         var event_readone =function(){
             const params = new URLSearchParams(window.location.search);
@@ -209,17 +221,106 @@ if(isset($_SESSION['role'])){
             method: "GET",
             redirect: "follow",
             };
-            fetch("http://localhost/sos/newweb/api/events/readone.php?id"+id,requestOptions)
+            fetch("http://localhost/sos/newweb/api/events/readone.php?id="+id,requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 var jsonObj = JSON.parse(result);
                 document.getElementById("id").value = jsonObj.id;
                 document.getElementById("name").value = jsonObj.name;
+                document.getElementById("about").value = jsonObj.about;
+                document.getElementById("datetime").value = jsonObj.datetime;
+                document.getElementById("type").value = jsonObj.type;
+                document.getElementById("distance").value = jsonObj.distance;
+                document.getElementById("cost").value = jsonObj.cost;
+                document.getElementById("owner").value = jsonObj.owner;
+                document.getElementById("address").value = jsonObj.address;
+                document.getElementById("province").value = jsonObj.province;
+                document.getElementById("dist").value = jsonObj.dist;
+                document.getElementById("subdist").value = jsonObj.subdist;
+                document.getElementById("zip").value = jsonObj.zip;
+                // document.getElementById("coverimg").src = jsonObj.coverimg;
+                // document.getElementById("mapimg").src = jsonObj.mapimg;
+                // document.getElementById("rewardimg").src = jsonObj.rewardimg;
+                // document.getElementById("paymentimg").src = jsonObj.paymentimg;
+                // document.getElementById("status").value = jsonObj.status;
+                // document.getElementById("photo").value = jsonObj.photo;
+
+                var statusSelect = document.getElementById("status");
+                var statusOptions = statusSelect.options;
+
+                for (var i = 0; i < statusOptions.length; i++) {
+                    if (statusOptions[i].value === jsonObj.status) {
+                        statusOptions[i].selected = true;
+                        break;
+                    }
+                }
+                var photoSelect = document.getElementById("photo");
+                var photoOptions = photoSelect.options;
+
+                for (var i = 0; i < statusOptions.length; i++) {
+                    if (parseInt(photoOptions[i].value) === jsonObj.photo) {
+                        photoOptions[i].selected = true;
+                        break;
+                    }
+                }
             })
+            .catch((error) => {
+            console.error('There was a problem with the fetch operation:', error);
+            // เพิ่มโค้ดที่ต้องการให้ทำงานเมื่อเกิดข้อผิดพลาด  เช่น แสดงข้อความแจ้งเตือนหรือจัดการในลักษณะอื่น
+        });
         }
     </script>
+    <script>
+      var event_update = function () {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
 
-<script>
+        const raw = JSON.stringify({
+          id: document.getElementById("id").value,
+          owner: document.getElementById("owner").value,
+          photo: document.getElementById("photo").value,
+          name: document.getElementById("name").value,
+          type: document.getElementById("type").value,
+          about: document.getElementById("about").value,
+          distance: document.getElementById("distance").value,
+          cost: document.getElementById("cost").value,
+          datetime: document.getElementById("datetime").value,
+          address: document.getElementById("address").value,
+          province: document.getElementById("province").value,
+          dist: document.getElementById("dist").value,
+          subdist: document.getElementById("subdist").value,
+          zip: document.getElementById("zip").value,
+          status: document.getElementById("status").value,
+        });
+
+
+        const requestOptions = {
+          method: "PATCH",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(
+          "http://localhost/sos/newweb/api/events/update.php",
+          requestOptions
+        )
+          .then((response) => response.text())
+          .then((result) => {
+            var jsonObj = JSON.parse(result);
+            if (jsonObj.status == "ok") {
+              alert(jsonObj.message);
+              window.location.href = "/sos/newweb/admin/index.php"
+            } else {
+              alert(jsonObj.message);
+            }
+          })
+          .catch((error) => console.error(error));
+      };
+
+    </script>
+
+<!-- <script>
 function showCoverImg() {
   var input = document.querySelector('input[name="coverimg"]');
   var img = document.getElementById('coverImage');
@@ -267,17 +368,33 @@ function showPaymentImg() {
     reader.readAsDataURL(input.files[0]);
   }
 }
-</script>
+</script> -->
   </body>
 </html>
 <?php
 $imagePaths = array();
+
 if(isset($_POST['submitimg'])){
   if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // ตรวจสอบว่ามีไฟล์ถูกส่งมาหรือไม่
     if (isset($_FILES['coverimg']) && isset($_FILES['mapimg']) && isset($_FILES['rewardimg']) && isset($_FILES['paymentimg'])){
         // กำหนดโฟลเดอร์ที่จะบันทึกไฟล์รูป
         $targetDir = "../../uploads/asset/";
+        
+        // ตรวจสอบว่ามีค่า $_SESSION['email'] อยู่หรือไม่
+        if(isset($_SESSION['email'])) {
+          // ถ้ามี $_SESSION['email'] ให้ใช้ค่าใน $_SESSION['email'] เป็นชื่อโฟลเดอร์
+          $targetDir .= $_SESSION['email'] . "/";
+          
+          // ตรวจสอบว่าโฟลเดอร์ยังไม่มีอยู่ให้สร้างใหม่
+          if (!file_exists($targetDir)) {
+            mkdir($targetDir, 0777, true);
+          }
+        } else {
+          // กรณีที่ไม่มี $_SESSION['email']
+          echo json_encode(array("error" => "User email session not found."));
+          exit(); // จบการทำงานทันที
+        }
         
         // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันเป็นส่วนหลังของชื่อไฟล์เพื่อป้องกันชื่อไฟล์ซ้ำ
         $coverimgName = uniqid() . "_" . basename($_FILES["coverimg"]["name"]);
@@ -312,14 +429,13 @@ if(isset($_POST['submitimg'])){
         // กรณีไม่มีไฟล์รูปถูกส่งมา
         echo json_encode(array("error" => "No files uploaded."));
     }
-} else {
+  } else {
     // กรณีไม่ใช่เมธอด POST
     echo json_encode(array("error" => "Only POST requests are allowed."));
+  }
 }
-}
-
 ?>
-<script>
+<!-- <script>
 // เรียกใช้ JSON ที่ส่งกลับมา
 var imagePathsJSON = <?php echo json_encode($imagePaths); ?>;
 
@@ -330,13 +446,13 @@ var rewardimgPath = imagePathsJSON.rewardimg;
 var paymentimgPath = imagePathsJSON.paymentimg;
 
 // นำ path ไปใช้งานตามต้องการ เช่น ใช้ในการแสดงรูปภาพใน HTML
-document.getElementById("coverImage").src = "../../uploads/asset/"+ coverimgPath;
-document.getElementById("mapImage").src = "../../uploads/asset/"+ mapimgPath;
-document.getElementById("rewardImage").src =  "../../uploads/asset/"+ rewardimgPath;
-document.getElementById("paymentImage").src =  "../../uploads/asset/"+ paymentimgPath;
+document.getElementById("coverImage").src = "../../uploads/asset/<?php echo $_SESSION['email']?>/"+ coverimgPath;
+document.getElementById("mapImage").src = "../../uploads/asset/<?php echo $_SESSION['email']?>/"+ mapimgPath;
+document.getElementById("rewardImage").src =  "../../uploads/asset/<?php echo $_SESSION['email']?>/"+ rewardimgPath;
+document.getElementById("paymentImage").src =  "../../uploads/asset/<?php echo $_SESSION['email']?>/"+ paymentimgPath;
 // นำ path ไปใช้งานตามต้องการ เช่น ใช้ในการแสดงรูปภาพใน HTML
 document.getElementById("coverimgpath").value = coverimgPath;
 document.getElementById("mapimgpath").value = mapimgPath;
 document.getElementById("rewardimgpath").value = rewardimgPath;
 document.getElementById("paymentimgpath").value = paymentimgPath;
-</script>
+</script> -->

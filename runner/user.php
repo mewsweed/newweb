@@ -83,7 +83,7 @@
         </div>  
         <div class="row">
           <div class="d-flex justify-content-end align-items-end">
-            <button class="btn-sm btn-warning" onclick="">รีเซ็ทใบหน้า</button>
+            <button class="btn-sm btn-warning" onclick="resetFace(<?php echo $_SESSION['id'] ?>)">รีเซ็ทใบหน้า</button>
           </div>
         </div>
       </div>
@@ -118,6 +118,8 @@
             </div>  
           </div>
         </div>
+
+
         <div class="row">
           <button type="button" onclick="user_update()" class="btn btn-primary">
             อัปเดทบัญชี
@@ -127,64 +129,112 @@
 
       <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="user_id" placeholder="0" disabled>
-          <label for="floatingInput">user_id</label>
+          <input type="text" class="form-control" id="user_id" placeholder="0" readonly>
+          <label for="floatingInput">ยูสเซอร์ไอดี</label>
         </div>
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="fname" placeholder="fname" >
-          <label for="floatingPassword">fname</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="lname" placeholder="lname">
-          <label for="floatingPassword">lname</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="birthday" placeholder="birthday">
-          <label for="floatingPassword">birthday</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="phone" placeholder="phone">
-          <label for="floatingPassword">phone</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="emerphone" placeholder="emerphone">
-          <label for="floatingPassword">emerphone</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="gender" placeholder="gender">
-          <label for="floatingPassword">gender</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="blood" placeholder="blood">
-          <label for="floatingPassword">blood</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="size" placeholder="size">
-          <label for="floatingPassword">size</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="address" placeholder="address">
-          <label for="floatingPassword">address</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="province" placeholder="province">
-          <label for="floatingPassword">province</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="dist" placeholder="dist">
-          <label for="floatingPassword">dist</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="subdist" placeholder="subdist">
-          <label for="floatingPassword">subdist</label>
-        </div>  
-        <div class="form-floating mb-3">
+        <div class="row">
+          <div class="col-sm">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="fname" placeholder="fname" >
+              <label for="floatingPassword">ชื่อจริง</label>
+            </div>              
+          </div>
+          <div class="col-sm">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="lname" placeholder="lname">
+              <label for="floatingPassword">นามสกุล</label>
+            </div>             
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="birthday" placeholder="birthday">
+              <label for="floatingPassword">วัน/เดือน/ปีเกิด</label>
+            </div>              
+          </div>
+          <div class="col-sm-4">
+          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="gender">
+            <option selected>เพศ</option>
+            <option value="ชาย">ชาย</option>
+            <option value="หญิง">หญิง</option>
+            <option value="ไม่ระบุ">ไม่ระบุ</option>
+          </select>
+          </div>
+          <div class="col-sm-4">
+          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="blood">
+            <option selected disabled>หมู่เลือด</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="AB">AB</option>
+            <option value="O">O</option>
+          </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="phone" placeholder="phone">
+              <label for="floatingPassword">เบอร์ติดต่อ</label>
+            </div>  
+          </div>
+          <div class="col">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="emerphone" placeholder="emerphone">
+              <label for="floatingPassword">เบอร์ติดต่อกรณีฉุกเฉิน</label>
+            </div>  
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-2">
+          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="size">
+            <option selected disabled>ไซส์</option>
+            <option value="xs">xs</option>
+            <option value="s">s</option>
+            <option value="m">m</option>
+            <option value="l">l</option>
+            <option value="xl">xl</option>
+            <option value="2xl">2xl</option>
+          </select>
+          </div>
+          <div class="col-5">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="address" placeholder="address">
+              <label for="floatingPassword">ที่อยู่</label>
+            </div>  
+          </div>
+          <div class="col-5">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="province" placeholder="province">
+              <label for="floatingPassword">จังหวัด</label>
+            </div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="dist" placeholder="dist">
+              <label for="floatingPassword">เขต/แขวง</label>
+            </div>  
+          </div>
+        <div class="col-4">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="subdist" placeholder="subdist">
+            <label for="floatingPassword">แขวง/ตำบล</label>
+          </div>  
+        </div>
+  <div class="col-4">
+  <div class="form-floating mb-3">
           <input type="text" class="form-control" id="zip" placeholder="zip">
-          <label for="floatingPassword">zip</label>
+          <label for="floatingPassword">ไปรษณีย์</label>
         </div>  
+  </div>
+ </div>
         <div class="row ">
           <button type="button" onclick="info_update()" class="btn btn-primary">
-            update infomation
+            อัปเดทข้อมูล
           </button>
         </div>
       </form>
@@ -228,12 +278,15 @@
             let imageHTML = "";
 
             result.forEach(face => {
-                // alert(`${face.face}`)
-                const imagePath = `/sos/newweb/uploads/runner/${face.face}`;
-                imageHTML += `<div class="col">`
-                imageHTML += `<img src="${imagePath}" class="img-fluid" alt="face image" >`;
-                // imageHTML += 
-                imageHTML += `</div>`
+                // Check if face.face is null
+                if (face.face !== null) {
+                    const imagePath = `/sos/newweb/uploads/runner/<?php echo $_SESSION["email"] ?>/${face.face}`;
+                    imageHTML += `<div class="col">`
+                    imageHTML += `<img src="${imagePath}" width="70px" alt="face image" >`;
+                    imageHTML += `</div>`
+                } else {
+                    console.log("face.face is null, skipping...");
+                }
             });
 
             document.getElementById("image_container").innerHTML = imageHTML;
@@ -298,6 +351,7 @@
         };
 
     </script>
+
     <script>
       var user_update = function () {
         const myHeaders = new Headers();
@@ -426,6 +480,58 @@
     }
 </script>
 
+<script>
+function resetFace(ownerId){
+    console.log(ownerId);
+    fetch(`http://localhost/sos/newweb/api/faces/delete.php?id=${ownerId}&email=<?php echo $_SESSION['email']?>`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            // การลบสำเร็จ
+            console.log("Face reset successfully");
+            // ทำการรีเฟรชหรือดำเนินการอื่นๆ ตามที่ต้องการ
+        } else {
+            // การลบไม่สำเร็จ
+            console.error("Failed to reset face");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
+}
+
+
+
+// function resetFace(ownerId){
+//     console.log(ownerId);
+//     fetch("http://localhost/sos/newweb/api/faces/delete.php", {
+//         method: "DELETE",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify({
+//             id: ownerId
+//         })
+//     })
+//     .then(response => {
+//         if (response.ok) {
+//             // การลบสำเร็จ
+//             console.log("Face reset successfully");
+//             // ทำการรีเฟรชหรือดำเนินการอื่นๆ ตามที่ต้องการ
+//         } else {
+//             // การลบไม่สำเร็จ
+//             console.error("Failed to reset face");
+//         }
+//     })
+//     .catch(error => {
+//         console.error("Error:", error);
+//     });
+// }
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>
 </html>

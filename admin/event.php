@@ -53,7 +53,7 @@
 
     <div class="container p-4">
       <div class="row text-center mb-3">
-        <h2>Manage Events</h2>
+        <h2>จัดการกิจกรรม</h2>
         
       </div>
       <div class="row mb-3 text-center">
@@ -61,12 +61,12 @@
         <button
           type="button"
           class="btn btn-primary"
-          onclick="window.open('create/event.php')"
+          onclick="window.location.href='/sos/newweb/admin/create/event.php'"
         >
-          Create Event
+          สร้างกิจกรรม
         </button>
         </div>
-        <div class="col">
+        <!-- <div class="col">
         <button
           type="button"
           class="btn btn-primary"
@@ -74,12 +74,12 @@
         >
           Create Request Event
         </button>
-        </div>
+        </div> -->
         
 
       </div>
 
-      <div class="row mb-3">
+      <!-- <div class="row mb-3">
         <table class="table">
             <h5>Request events</h5>
             <thead>
@@ -97,7 +97,7 @@
             </tbody>
 
         </table>
-      </div>
+      </div> -->
       <div class="row">
         <table class="table">
             <h5>งานวิ่ง</h5>

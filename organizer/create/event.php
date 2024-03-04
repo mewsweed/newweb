@@ -23,11 +23,45 @@ if(isset($_SESSION['role'])){
     <title>ADMIN Create</title>
   </head>
   <body>
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a
+      href="/sos/newweb/index.php"
+      class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+    >
+      <svg class="bi me-2" width="40" height="32">
+        <use xlink:href="#bootstrap"></use>
+      </svg>
+      <span class="fs-4">ผู้จัดงาน</span>
+    </a>
+
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a
+          href="/sos/newweb/runner/index.php"
+          class="nav-link"
+          aria-current="page"
+          >หน้าแรก</a
+        >
+      </li>
+      <li class="nav-item">
+        <a href="/sos/newweb/organizer/user.php?id=<?php echo $_SESSION['id'] ?>" class="nav-link">บัญชีผู้ใช้</a>
+      </li>
+      <li class="nav-item">
+        <a href="/sos/newweb/organizer/create/event.php" class="nav-link active">กิจกรรมงานวิ่ง</a>
+      </li>
+      <li class="nav-item">
+        <a href="/sos/newweb/api/logout.php" class="nav-link" >ลงชื่อออก</a>
+      </li>
+    </ul>
+  </header>
+
     <div class="container">
       <div class="row text-center mt-3 mb-3">
         <h1>Create Request Events</h1>
       </div>
+      <div class="row border p-4">
 
+      
       <form action="" method="post" enctype="multipart/form-data" class="mb-3" >
         <div class="row text-center" >
           <div class="col-md">
@@ -83,7 +117,9 @@ if(isset($_SESSION['role'])){
           <button type="submit" name="submitimg" class="btn btn-primary">Upload</button>
         </div>
       </form>
+      </div>
 
+      <div class="row border p-4">
 
       <form onsubmit="return false">
         <div class="row">
@@ -190,18 +226,20 @@ if(isset($_SESSION['role'])){
         </div>
         
         <div class="row text-center">
-          <div class="col ">
+          
           <button type="button" onclick="request_create()"
-           class="btn btn-primary w-100">
+           class="btn btn-primary ">
             แก้ไขคำร้อง
           </button>
-          </div>
-          <div class="col" id="delBtn">
+          <!-- </div> -->
+          <!-- <div class="col" id="delBtn">
 
-          </div>
+          </div> -->
 
         </div>
       </form>
+      
+      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
@@ -246,7 +284,7 @@ if(isset($_SESSION['role'])){
             var jsonObj = JSON.parse(result);
             if (jsonObj.status == "ok") {
               alert(jsonObj.message);
-              window.location.href = "/sos/newweb/admin/event.php"
+              window.location.href = "/sos/newweb/organizer/index.php"
             } else {
               alert(jsonObj.message);
             }

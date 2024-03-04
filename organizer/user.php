@@ -15,7 +15,8 @@
 
     <title>Runner Profile</title>
   </head>
-  <body onload="user_readone(); info_readone(); face_readone();">
+  <!-- face_readone(); -->
+  <body onload="user_readone(); info_readone(); ">
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a
       href="/sos/newweb/index.php"
@@ -37,10 +38,10 @@
         >
       </li>
       <li class="nav-item">
-        <a href="/sos/newweb/runner/user.php?id=<?php echo $_SESSION['id'] ?>" class="nav-link active">บัญชีผู้ใช้</a>
+        <a href="/sos/newweb/organizer/user.php?id=<?php echo $_SESSION['id'] ?>" class="nav-link active">บัญชีผู้ใช้</a>
       </li>
       <li class="nav-item">
-        <a href="/sos/newweb/runner/event.php" class="nav-link">กิจกรรมงานวิ่ง</a>
+        <a href="/sos/newweb/organizer/create/event.php" class="nav-link">กิจกรรมงานวิ่ง</a>
       </li>
       <li class="nav-item">
         <a href="/sos/newweb/api/logout.php" class="nav-link" >ลงชื่อออก</a>
@@ -51,7 +52,7 @@
     <div class="row text-center mb-3">
       <h1 class=" border-bottom border-4 pb-2">บัญชีของฉัน</h1>
     </div>
-    <div class="row">
+    <!-- <div class="row">
 
       <div class="col-md-4">
         <form action="/sos/newweb/api/faces/create.php" method="post" enctype="multipart/form-data" class="mt-3 mb-3 border border-2 p-4 text-center">
@@ -78,7 +79,7 @@
           </div>
         </div>
       </div>
-      </div>
+    </div> -->
     
       <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
         <div class="row">
@@ -118,64 +119,112 @@
 
       <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="user_id" placeholder="0" disabled>
-          <label for="floatingInput">user_id</label>
+          <input type="hidden" class="form-control" id="user_id" placeholder="0" readonly>
+          <!-- <label for="floatingInput">ยูสเซอร์ไอดี</label> -->
         </div>
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="fname" placeholder="fname" >
-          <label for="floatingPassword">fname</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="lname" placeholder="lname">
-          <label for="floatingPassword">lname</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="birthday" placeholder="birthday">
-          <label for="floatingPassword">birthday</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="phone" placeholder="phone">
-          <label for="floatingPassword">phone</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="emerphone" placeholder="emerphone">
-          <label for="floatingPassword">emerphone</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="gender" placeholder="gender">
-          <label for="floatingPassword">gender</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="blood" placeholder="blood">
-          <label for="floatingPassword">blood</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="size" placeholder="size">
-          <label for="floatingPassword">size</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="address" placeholder="address">
-          <label for="floatingPassword">address</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="province" placeholder="province">
-          <label for="floatingPassword">province</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="dist" placeholder="dist">
-          <label for="floatingPassword">dist</label>
-        </div>  
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="subdist" placeholder="subdist">
-          <label for="floatingPassword">subdist</label>
-        </div>  
-        <div class="form-floating mb-3">
+        <div class="row">
+          <div class="col-sm">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="fname" placeholder="fname" >
+              <label for="floatingPassword">ชื่อจริง</label>
+            </div>              
+          </div>
+          <div class="col-sm">
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="lname" placeholder="lname">
+              <label for="floatingPassword">นามสกุล</label>
+            </div>             
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="birthday" placeholder="birthday">
+              <label for="floatingPassword">วัน/เดือน/ปีเกิด</label>
+            </div>              
+          </div>
+          <div class="col-sm-4">
+          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="gender">
+            <option selected>เพศ</option>
+            <option value="ชาย">ชาย</option>
+            <option value="หญิง">หญิง</option>
+            <option value="ไม่ระบุ">ไม่ระบุ</option>
+          </select>
+          </div>
+          <div class="col-sm-4">
+          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="blood">
+            <option selected disabled>หมู่เลือด</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="AB">AB</option>
+            <option value="O">O</option>
+          </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="phone" placeholder="phone">
+              <label for="floatingPassword">เบอร์ติดต่อ</label>
+            </div>  
+          </div>
+          <div class="col">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="emerphone" placeholder="emerphone">
+              <label for="floatingPassword">เบอร์ติดต่อกรณีฉุกเฉิน</label>
+            </div>  
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-2">
+          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="size">
+            <option selected disabled>ไซส์</option>
+            <option value="xs">xs</option>
+            <option value="s">s</option>
+            <option value="m">m</option>
+            <option value="l">l</option>
+            <option value="xl">xl</option>
+            <option value="2xl">2xl</option>
+          </select>
+          </div>
+          <div class="col-5">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="address" placeholder="address">
+              <label for="floatingPassword">ที่อยู่</label>
+            </div>  
+          </div>
+          <div class="col-5">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="province" placeholder="province">
+              <label for="floatingPassword">จังหวัด</label>
+            </div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="dist" placeholder="dist">
+              <label for="floatingPassword">เขต/แขวง</label>
+            </div>  
+          </div>
+        <div class="col-4">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="subdist" placeholder="subdist">
+            <label for="floatingPassword">แขวง/ตำบล</label>
+          </div>  
+        </div>
+  <div class="col-4">
+  <div class="form-floating mb-3">
           <input type="text" class="form-control" id="zip" placeholder="zip">
-          <label for="floatingPassword">zip</label>
+          <label for="floatingPassword">ไปรษณีย์</label>
         </div>  
+  </div>
+ </div>
         <div class="row ">
           <button type="button" onclick="info_update()" class="btn btn-primary">
-            update infomation
+            อัปเดทข้อมูล
           </button>
         </div>
       </form>
@@ -197,8 +246,7 @@
             .then((response) => response.text())
             .then((result) => {
               var jsonObj = JSON.parse(result);
-              document.getElementById('faceId').value = jsonObj.id;
-
+              // document.getElementById('faceId').value = jsonObj.id;
               document.getElementById("id").value = jsonObj.id;
               document.getElementById("email").value = jsonObj.email;
               document.getElementById("username").value = jsonObj.username;
@@ -207,34 +255,34 @@
             .catch((error) => console.error(error));
         };
 
-        var face_readone = function() {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
-    const requestOptions = {
-        method: "GET",
-        redirect: "follow",
-    };
-    fetch("http://localhost/sos/newweb/api/faces/readbyid.php?id=" + id, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            let imageHTML = "";
+//         var face_readone = function() {
+//     const params = new URLSearchParams(window.location.search);
+//     const id = params.get("id");
+//     const requestOptions = {
+//         method: "GET",
+//         redirect: "follow",
+//     };
+//     fetch("http://localhost/sos/newweb/api/faces/readbyid.php?id=" + id, requestOptions)
+//         .then(response => response.json())
+//         .then(result => {
+//             let imageHTML = "";
 
-            result.forEach(face => {
-                // alert(`${face.face}`)
-                const imagePath = `/sos/newweb/uploads/runner/${face.face}`;
-                imageHTML += `<div class="col">`
-                imageHTML += `<img src="${imagePath}" alt="face image" width="100px">`;
-                // imageHTML += 
-                imageHTML += `</div>`
-            });
+//             result.forEach(face => {
+//                 // alert(`${face.face}`)
+//                 const imagePath = `/sos/newweb/uploads/runner/${face.face}`;
+//                 imageHTML += `<div class="col">`
+//                 imageHTML += `<img src="${imagePath}" alt="face image" width="100px">`;
+//                 // imageHTML += 
+//                 imageHTML += `</div>`
+//             });
 
-            document.getElementById("image_container").innerHTML = imageHTML;
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-            document.getElementById("image_container").innerHTML = "An error occurred while fetching data.";
-        });
-}
+//             document.getElementById("image_container").innerHTML = imageHTML;
+//         })
+//         .catch(error => {
+//             console.error("Error fetching data:", error);
+//             document.getElementById("image_container").innerHTML = "An error occurred while fetching data.";
+//         });
+// }
 
 
         var info_readone =function(){
