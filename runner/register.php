@@ -18,7 +18,9 @@ if (isset($_POST['submit'])) {
         $total = $row['total'];
 
         if ($total > 0) {
-            echo "คุณได้สมัครงานนี้ไปแล้ว";
+            echo "<script>alert('คุณได้สมัครงานนี้ไปแล้ว')</script>";
+            // header("Location: /sos/newweb/runner/index.php");
+            // exit();
         } else {
             $file_tmp = $_FILES['paid']['tmp_name'];
             // อ่านขนาดของไฟล์
@@ -40,7 +42,9 @@ if (isset($_POST['submit'])) {
             $runNo = $row['total'] + 1; // นับแล้วเพิ่ม 1
 
             // เพิ่มข้อมูลลงในตาราง event_joined
-            $stmt = $dbh->prepare("INSERT INTO event_joined (user_id, event_id, runNo, size, paid ,ship) VALUES (:user_id, :event_id, :runNo, :size, :paid :ship)");
+            $stmt = $dbh->prepare("INSERT INTO event_joined
+             (user_id, event_id, runNo, size, paid, ship) 
+             VALUES (:user_id, :event_id, :runNo, :size, :paid, :ship)");
             $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
             $stmt->bindParam(':runNo', $runNo, PDO::PARAM_INT);
@@ -76,6 +80,18 @@ if (isset($_POST['submit'])) {
 
 
     <title>RUNNER JOIN</title>
+    <style>
+body { 
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #F2FFFF;
+}
+header {
+  background-color: #fff;
+  color: rgb(88, 117, 188);
+  text-align: center;
+}
+    </style>
   </head>
   <body onload="event_readone(); info_readone();">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-2 border-bottom">
@@ -83,10 +99,9 @@ if (isset($_POST['submit'])) {
         href="/sos/newweb/index.php"
         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
         >
-        <svg class="bi me-2" width="40" height="32">
-            <use xlink:href="#bootstrap"></use>
-        </svg>
-        <span class="fs-4">นักวิ่ง</span>
+        <img src="/sos/newweb/uploads/asset/web/brandner.png" height="60px" alt="">
+
+<span class="fs-4 px-2">นักวิ่ง</span>
         </a>
 
         <ul class="nav nav-pills">
@@ -144,7 +159,7 @@ if (isset($_POST['submit'])) {
       <div class="row p-4 text-center">
         <div class="col-sm-4">
             <h3>การชำระเงิน</h3>
-            <img src="/sos/newweb/uploads/asset/desktop-1920x1080.jpg" alt=""  class="img-thumbnail" id="paymentimg">
+            <img src="" alt="reward"  class="img-thumbnail" id="rewardimg">
         </div>
         <div class="col-sm-4 d-flex justify-content-center align-items-center">
             <form action="" method="POST" enctype="multipart/form-data">
@@ -155,12 +170,21 @@ if (isset($_POST['submit'])) {
                     <label for="size" class="m-2">ไซส์</label>
                     <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="size" name="size">
                         <option selected disabled>ไซส์</option>
-                        <option value="xs">xs</option>
-                        <option value="s">s</option>
-                        <option value="m">m</option>
-                        <option value="l">l</option>
-                        <option value="xl">xl</option>
-                        <option value="2xl">2xl</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="2XL">2XL</option>
+                        <option value="3XL">3XL</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="ship" class="m-2">การรับของ</label>
+                    <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="ship" name="ship">
+                        <option selected disabled>การรับของ</option>
+                        <option value="รับหน้างาน">รับหน้างาน</option>
+                        <option value="จัดส่งตามที่อยู่">จัดส่งตามที่อยู่</option>
                     </select>
                 </div>
                 <div class="col border p-2">
@@ -175,7 +199,7 @@ if (isset($_POST['submit'])) {
         </div>
         <div class="col-sm-4">
             <h3>ตัวอย่างเสื้อ</h3>
-            <img src="/sos/newweb/uploads/asset/desktop-1920x1080.jpg" alt=""  class="img-thumbnail" id="rewardimg">
+            <img src="/sos/newweb/uploads/asset/desktop-1920x1080.jpg" alt="payment"  class="img-thumbnail" id="paymentimg">
         </div>
       </div>
 
@@ -186,31 +210,31 @@ if (isset($_POST['submit'])) {
         <div class="col text-center border">
           <div class="row p-4">
             <div class="col">
-              <h4>สถานที่จัดงาน</h4>
+              <h4 class="bg-secondary text-light p-2 ">สถานที่จัดงาน</h4>
+            </div>
+          </div>
+          <div class="row px-2 ">
+            <div class="col border py-1">
+                <p class="bg-secondary text-light p-1 ">สถานที่</p>
+                <h5 id="address"></h5>
+            </div>
+            <div class="col border py-1">
+                <p class="bg-secondary text-light p-1 ">จังหวัด</p>
+                <h5 id="province"></h5>
             </div>
           </div>
           <div class="row px-2 py-2">
-            <div class="col border">
-            <p>สถานที่</p>
-            <h5 id="address"></h5>
+            <div class="col border py-1">
+                <p class="bg-secondary text-light p-1 ">เขต</p>
+                <h5 id="dist"></h5>
             </div>
-            <div class="col border">
-              <p>จังหวัด</p>
-              <h5 id="province"></h5>
+            <div class="col border py-1">
+                <p class="bg-secondary text-light p-1 ">แขวง</p>
+                <h5 id="subdist"></h5>
             </div>
-          </div>
-          <div class="row px-2 py-2">
-            <div class="col border">
-              <p>เขต</p>
-              <h5 id="dist"></h5>
-            </div>
-            <div class="col border">
-              <p>แขวง</p>
-              <h5 id="subdist"></h5>
-            </div>
-            <div class="col border ">
-              <p>ไปรษณีย์</p>
-              <h5 id="zip"></h5>
+            <div class="col border py-1">
+                <p class="bg-secondary text-light p-1 ">ไปรษณีย์</p>
+                <h5 id="zip"></h5>
             </div>
           </div>
         </div>
@@ -262,9 +286,9 @@ if (isset($_POST['submit'])) {
             document.getElementById('cost').innerHTML =jsonObj.cost;
             document.getElementById('type').innerHTML =jsonObj.type;
             // document.getElementById('coverimg').src = "/sos/newweb/uploads/asset/"+jsonObj.coverimg;
-            document.getElementById('mapimg').src = "/sos/newweb/uploads/asset/"+jsonObj.mapimg;
-            document.getElementById('rewardimg').src = "/sos/newweb/uploads/asset/"+jsonObj.rewardimg;
-            document.getElementById('paymentimg').src = "/sos/newweb/uploads/asset/"+jsonObj.paymentimg;
+            document.getElementById('mapimg').src = "/sos/newweb/uploads/asset/"+jsonObj.owner+"/"+jsonObj.mapimg;
+            document.getElementById('rewardimg').src = "/sos/newweb/uploads/asset/"+jsonObj.owner+"/"+jsonObj.rewardimg;
+            document.getElementById('paymentimg').src = "/sos/newweb/uploads/asset/"+jsonObj.owner+"/"+jsonObj.paymentimg;
           })
           .catch((error) => console.error(error));
       };

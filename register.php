@@ -9,20 +9,29 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Hello, world!</title>
+    <style>
+        body { 
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #F2FFFF;
+}
+    </style>
   </head>
   <body>
     <div class="container text-center">
+        <img src="/sos/newweb/uploads/asset/web/icon.png" height="250px" alt="">
         <div class="row mt-3 mb-2 p-4 border-bottom border-2 border-dark">
-            <h1>Which Role do you want?</h1>
+            <h1>ระบบจัดการกิจกรรมงานวิ่ง</h1>
+            <h2>คุณต้องการสมัครสมาชิกในฐานะอะไร</h2>
         </div>
         <div class="row p-4">
             <div class="col ">
-                <h2 class="mb-3">RUNNER</h2>
-                <button type="button" onclick="goRegisterRunner()" class="btn btn-primary">Click</button>
+                <h2 class="mb-3">นักวิ่ง</h2>
+                <button type="button" onclick="goRegisterRunner()" class="btn btn-primary">สมัคร</button>
             </div>
             <div class="col">
-                <h2 class="mb-3">ORGANIZER</h2>
-                <button type="button" onclick="goRegisterOrganizer()" class="btn btn-primary">Click</button>
+                <h2 class="mb-3">ผู้จัดงาน</h2>
+                <button type="button" onclick="goRegisterOrganizer()" class="btn btn-primary">สมัคร</button>
             </div>
         </div>
     </div>

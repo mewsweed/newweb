@@ -1,10 +1,13 @@
 <?php
   session_start();
   if(!isset($_SESSION['role'])){
+    echo "<script>alert('ไม่พบเซสชั่น กรุณาเข้าสู่ระบบใหม่')</script>";
     header("Location: /sos/newweb/login.php");
   }else{
     if($_SESSION['role'] !== 'runner'){
-      header("Location: /sos/newweb/login.php");
+      
+      echo "<script>alert('สำหรับนักวิ่งเท่านั้น กรุณาเข้าสู่ระบบด้วยนักวิ่ง')</script>";
+      header("Location: /sos/newweb/api/logout.php");
     }
   }
 ?>
@@ -21,18 +24,28 @@
 
     <title>Runner Profile</title>
     <style>
+
+body { 
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #F2FFFF;
+}
+header {
+  background-color: #fff;
+  color: rgb(88, 117, 188);
+  text-align: center;
+}
     </style>
   </head>
   <body onload="user_readone(); info_readone(); face_readone();">
-  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-2 border-bottom">
     <a
       href="/sos/newweb/index.php"
       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
     >
-      <svg class="bi me-2" width="40" height="32">
-        <use xlink:href="#bootstrap"></use>
-      </svg>
-      <span class="fs-4">นักวิ่ง</span>
+    <img src="/sos/newweb/uploads/asset/web/brandner.png" height="60px" alt="">
+
+      <span class="fs-4 px-2">นักวิ่ง</span>
     </a>
 
     <ul class="nav nav-pills">
@@ -57,13 +70,13 @@
   </header>
   <div class="contanier p-4">
     <div class="row text-center mb-3">
-      <h1 class=" border-bottom border-4 pb-2">บัญชีของฉัน</h1>
+      <h1 class="pb-2" style="font-weight:600">บัญชีของฉัน</h1>
     </div>
     <div class="row">
 
       <div class="col-md-4">
         <form action="/sos/newweb/api/faces/create.php" method="post" enctype="multipart/form-data" class="mt-3 mb-3 border border-2 p-4 text-center">
-          <h3>อัปโหลดใบหน้า</h3>
+          <h3 style="font-weight:600">อัปโหลดใบหน้า</h3>
           <input style="display: none;" type="text" name="id" id="faceId" readonly>
 
           <div class="border py-2 border-2" id="imageContainer">
@@ -78,26 +91,23 @@
       </div>
       <div class="col border p-4 text-center">
           <h3>รูปใบหน้า</h3>
+          <button class="btn-sm btn-warning" onclick="resetFace(<?php echo $_SESSION['id'] ?>)">รีเซ็ทใบหน้า</button>
         <div class="row mb-2" id="image_container">
 
-        </div>  
-        <div class="row">
-          <div class="d-flex justify-content-end align-items-end">
-            <button class="btn-sm btn-warning" onclick="resetFace(<?php echo $_SESSION['id'] ?>)">รีเซ็ทใบหน้า</button>
-          </div>
         </div>
       </div>
       </div>
     
     <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
+    <label for=""><h4 style="font-weight:600">บัญชีผู้ใช้</h4></label>
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-6" style="display:none;">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="id" placeholder="0" readonly>
               <label for="floatingInput">ไอดี</label>
             </div>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6" style="display:none;">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="role" placeholder="role" readonly>
               <label for="floatingPassword">บทบาท</label>
@@ -126,9 +136,9 @@
           </button>
         </div>
       </form>
-
       <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
-        <div class="form-floating mb-3">
+        <label for=""><h4 style="font-weight:600">ข้อมูลส่วนตัว</h4></label>
+        <div class="form-floating mb-3" style="display:none">
           <input type="text" class="form-control" id="user_id" placeholder="0" readonly>
           <label for="floatingInput">ยูสเซอร์ไอดี</label>
         </div>
@@ -154,15 +164,17 @@
             </div>              
           </div>
           <div class="col-sm-4">
-          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="gender">
-            <option selected>เพศ</option>
+          <div class="row py-1 px-3 mb-1 rounded">เพศ</div>
+          <select class="form-select form-select-sm mb-3" aria-label="Large select example" id="gender">
+            <option selected disabled>เพศ</option>
             <option value="ชาย">ชาย</option>
             <option value="หญิง">หญิง</option>
             <option value="ไม่ระบุ">ไม่ระบุ</option>
           </select>
           </div>
           <div class="col-sm-4">
-          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="blood">
+            <div class="row py-1 px-3 mb-1 rounded">หมู่เลือด</div>
+          <select class="form-select form-select-sm mb-3" aria-label="Large select example" id="blood">
             <option selected disabled>หมู่เลือด</option>
             <option value="A">A</option>
             <option value="B">B</option>
@@ -188,15 +200,17 @@
         </div>
 
         <div class="row">
-          <div class="col-2">
-          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="size">
-            <option selected disabled>ไซส์</option>
-            <option value="xs">xs</option>
-            <option value="s">s</option>
-            <option value="m">m</option>
-            <option value="l">l</option>
-            <option value="xl">xl</option>
-            <option value="2xl">2xl</option>
+        <div class="col-2">
+          <div class="row py-1 px-3 mb-1 rounded">ไซส์เสื้อ</div>
+          <select class="form-select form-select-sm mb-3" id="size">
+            <option selected disabled>ไซส์เสื้อ</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="2XL">2XL</option>
+            <option value="3XL">3XL</option>
           </select>
           </div>
           <div class="col-5">
@@ -292,8 +306,8 @@
             document.getElementById("image_container").innerHTML = imageHTML;
         })
         .catch(error => {
-            console.error("Error fetching data:", error);
-            document.getElementById("image_container").innerHTML = "An error occurred while fetching data.";
+            // console.error("Error fetching data:", error);
+            document.getElementById("image_container").innerHTML = "<div class='col text-danger mt-3'>Face not found.</div>";
         });
 }
 

@@ -28,6 +28,18 @@
 
 
     <title>ADMIN Edit</title>
+    <style>
+      body { 
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #F2FFFF;
+}
+header {
+  background-color: #fff;
+  color: rgb(88, 117, 188);
+  text-align: center;
+}
+    </style>
   </head>
   <body onload="event_readone()">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-2 border-bottom">
@@ -35,10 +47,9 @@
         href="/sos/newweb/index.php"
         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
         >
-        <svg class="bi me-2" width="40" height="32">
-            <use xlink:href="#bootstrap"></use>
-        </svg>
-        <span class="fs-4">นักวิ่ง</span>
+        <img src="/sos/newweb/uploads/asset/web/brandner.png" height="60px" alt="">
+
+        <span class="fs-4 px-2">นักวิ่ง</span>
         </a>
 
         <ul class="nav nav-pills">
@@ -184,9 +195,9 @@
             document.getElementById('distance').innerHTML =jsonObj.distance;
             document.getElementById('cost').innerHTML =jsonObj.cost;
             document.getElementById('type').innerHTML =jsonObj.type;
-            document.getElementById('coverimg').src = "/sos/newweb/uploads/asset/"+jsonObj.coverimg;
-            document.getElementById('mapimg').src = "/sos/newweb/uploads/asset/"+jsonObj.mapimg;
-            document.getElementById('rewardimg').src = "/sos/newweb/uploads/asset/"+jsonObj.rewardimg;
+            document.getElementById('coverimg').src = "/sos/newweb/uploads/asset/"+jsonObj.owner+"/"+jsonObj.coverimg;
+            document.getElementById('mapimg').src = "/sos/newweb/uploads/asset/"+jsonObj.owner+"/"+jsonObj.mapimg;
+            document.getElementById('rewardimg').src = "/sos/newweb/uploads/asset/"+jsonObj.owner+"/"+jsonObj.rewardimg;
             // document.getElementById("id").value = jsonObj.id;
             // document.getElementById("email").value = jsonObj.email;
             // document.getElementById("username").value = jsonObj.username;

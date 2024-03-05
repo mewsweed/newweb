@@ -71,8 +71,10 @@
 
   <body class="text-center">
     <div class="form-login">
+      
+    <img src="/sos/newweb/uploads/asset/web/icon.png" height="250" alt="login">
       <form method="POST">
-        <h1 class="mt-3 mb-3">เข้าสู่ระบบ</h1>
+        <h1 class="mt-3 mb-3 text-primary">เข้าสู่ระบบ</h1>
         <div class="text text-danger">
         <?php
           if(isset($_SESSION['error'])){

@@ -102,8 +102,8 @@ if(isset($_SESSION['role'])){
           <div class="col">
             <select class="form-select form-select-lg mb-3" id="photo" placeholder="ช่างภาพ">
                 <option selected disabled>ช่างภาพ</option>
-                <option value=0>ไม่รับช่างภาพ</option>
-                <option value=1>รับช่างภาพ</option>
+                <option value="ไม่รับสมัคร">ไม่รับช่างภาพ</option>
+                <option value="รับสมัคร">รับช่างภาพ</option>
               </select>
           </div>
         </div>

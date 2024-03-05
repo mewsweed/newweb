@@ -1,11 +1,13 @@
 <?php session_start();
-
-if(isset($_SESSION['role'])){
-
-}else{ 
-  header("Location: /sos/newweb/login.php");
-}
-
+  if(!isset($_SESSION['role'])){
+    echo "<script>alert('ไม่พบเซสชั่น กรุณาเข้าสู่ระบบใหม่')</script>";
+    header("Location: /sos/newweb/login.php");
+  }else{
+    if($_SESSION['role'] !== "organizer"){
+      echo "<script>alert('คุณไม่ใช่ผู้จัดงาน กรุณาเข้าสู่ระบบใหม่ด้วยยูสเซอร์ของผู้จัดงาน')</script>";
+      header("Location: /sos/newweb/api/logout.php");
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +22,7 @@ if(isset($_SESSION['role'])){
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>ADMIN Create</title>
+    <title>Organizer Create Event</title>
   </head>
   <body>
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -28,10 +30,8 @@ if(isset($_SESSION['role'])){
       href="/sos/newweb/index.php"
       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
     >
-      <svg class="bi me-2" width="40" height="32">
-        <use xlink:href="#bootstrap"></use>
-      </svg>
-      <span class="fs-4">ผู้จัดงาน</span>
+    <img src="/sos/newweb/uploads/asset/web/brandner.png" height="60px" alt="">
+      <span class="fs-4 px-2">ผู้จัดงาน</span>
     </a>
 
     <ul class="nav nav-pills">
@@ -57,38 +57,36 @@ if(isset($_SESSION['role'])){
 
     <div class="container">
       <div class="row text-center mt-3 mb-3">
-        <h1>Create Request Events</h1>
+        <h1>สร้างกิจกรรมงานวิ่ง</h1>
       </div>
       <div class="row border p-4">
-
-      
       <form action="" method="post" enctype="multipart/form-data" class="mb-3" >
         <div class="row text-center" >
           <div class="col-md">
-            <h4>ปกงาน</h4>
-            <img src="" alt="" class="img-thumbnail" id="coverImage">
-            <input type="text" id="coverimgpath" value="">
+            <!-- <h4>ปกงาน</h4> -->
+            <img src="" alt="cover" class="img-thumbnail" id="coverImage">
+            <input type="hidden" id="coverimgpath" value="">
           </div>
             <div class="col-md">
-            <h4>แผนที่</h4>
-              <img src="" alt="" class="img-thumbnail" id="mapImage">
-              <input type="text" id="mapimgpath" value="">
+            <!-- <h4>แผนที่</h4> -->
+              <img src="" alt="map" class="img-thumbnail" id="mapImage">
+              <input type="hidden" id="mapimgpath" value="">
             </div>
             <div class="col-md">
-            <h4>รางวัล</h4>
-            <img src="" alt="" class="img-thumbnail" id="rewardImage">
-              <input type="text" id="rewardimgpath" value="">
+            <!-- <h4>รางวัล</h4> -->
+              <img src="" alt="reward" class="img-thumbnail" id="rewardImage">
+              <input type="hidden" id="rewardimgpath" value="">
             </div>
             <div class="col-md">
-            <h4>การชำระเงิน</h4>
-            <img src="" alt="" class="img-thumbnail" id="paymentImage">
-              <input type="text" id="paymentimgpath" value="">
+            <!-- <h4>การชำระเงิน</h4> -->
+              <img src="" alt="payment" class="img-thumbnail" id="paymentImage">
+              <input type="hidden" id="paymentimgpath" value="">
             </div>
         </div>
       <div class="row text-center mt-2">
           <div class="col-lg">
             <div class="mb-3">
-              <label for="formFile" class="form-label">ภาพปกงาน</label>
+              <label for="formFile" class="form-label"><h4>ภาพปกงาน</h4></label>
               <input class="form-control" type="file" name="coverimg" onchange="showCoverImg()">
             </div>
           </div>
@@ -114,7 +112,7 @@ if(isset($_SESSION['role'])){
           </div>
         </div>
         <div class="row px-4">
-          <button type="submit" name="submitimg" class="btn btn-primary">Upload</button>
+          <button type="submit" name="submitimg" class="btn btn-primary">อัพโหลดไฟล์รูป</button>
         </div>
       </form>
       </div>
@@ -138,8 +136,8 @@ if(isset($_SESSION['role'])){
           <div class="col">
             <select class="form-select form-select-lg mb-3" id="photo">
                 <option selected disabled>ช่างภาพ</option>
-                <option value="1">รับ</option>
-                <option value="0">ไม่รับ</option>
+                <option value="รับ">รับ</option>
+                <option value="ไม่รับ">ไม่รับ</option>
               </select>
           </div>
         </div>
@@ -152,10 +150,7 @@ if(isset($_SESSION['role'])){
             </div>  
           </div>
           <div class="col-md-4">
-            <!-- <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="type" placeholder="event name">
-              <label for="floatingPassword">ประเภท</label>
-            </div>   -->
+
             <select class="form-select form-select-lg mb-3" id="type">
               <option selected>ประเภทงาน</option>
               <option value="เดิน">เดิน</option>

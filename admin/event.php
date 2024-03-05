@@ -20,20 +20,21 @@
 
   <body onload="event_read(); ">
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-    <a
+  <a
       href="/sos/newweb/index.php"
       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
     >
-      <svg class="bi me-2" width="40" height="32">
+      <!-- <svg class="bi me-2" width="40" height="32">
         <use xlink:href="#bootstrap"></use>
-      </svg>
-      <span class="fs-4">แอดมิน</span>
+      </svg> -->
+      <img src="/sos/newweb/uploads/asset/web/brandner.png" height="60px" alt="">
+      <span class="fs-4 px-2">แอดมิน</span>
     </a>
 
     <ul class="nav nav-pills">
       <li class="nav-item">
         <a
-          href="/sos/newweb/index.php"
+          href="/sos/newweb/admin/index.php"
           class="nav-link "
           aria-current="page"
           >หน้าแรก</a

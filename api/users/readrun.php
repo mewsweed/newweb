@@ -6,7 +6,7 @@
     try{
 
         $users = array();
-        foreach($dbh->query('SELECT * FROM users')as $row){
+        foreach($dbh->query('SELECT * FROM users where role="runner"')as $row){
             // print_r($row);
             array_push($users,array(
                 'id'=> $row['id'],

@@ -23,6 +23,10 @@
         $stmt_info = $dbh->prepare("DELETE FROM info WHERE user_id = ?");
         $stmt_info->bindParam(1, $data->id);
         $stmt_info->execute();
+
+        $stmt_join = $dbh->prepare("DELETE FROM event_joined WHERE user_id = ?");
+        $stmt_join->bindParam(1, $data->id);
+        $stmt_join->execute();
         
         // ทำการลบข้อมูลในตารางหลัก
         $stmt = $dbh->prepare("DELETE FROM users WHERE id = ?");

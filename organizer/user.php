@@ -1,7 +1,14 @@
-<?php
-  session_start();
-
-?>
+<?php session_start();
+  if(!isset($_SESSION['role'])){
+    echo "<script>alert('ไม่พบเซสชั่น กรุณาเข้าสู่ระบบใหม่')</script>";
+    header("Location: /sos/newweb/login.php");
+  }else{
+    if($_SESSION['role'] !== "organizer"){
+      echo "<script>alert('คุณไม่ใช่ผู้จัดงาน กรุณาเข้าสู่ระบบใหม่ด้วยยูสเซอร์ของผู้จัดงาน')</script>";
+      header("Location: /sos/newweb/api/logout.php");
+    }
+  }
+ ?>
 
 <!doctype html>
 <html lang="en">
@@ -13,7 +20,22 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Runner Profile</title>
+    <title>Organizer Profile</title>
+
+    <style>
+
+body { 
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #F2FFFF;
+}
+header {
+  background-color: #fff;
+  color: rgb(88, 117, 188);
+  text-align: center;
+}
+    </style>
+
   </head>
   <!-- face_readone(); -->
   <body onload="user_readone(); info_readone(); ">
@@ -22,10 +44,8 @@
       href="/sos/newweb/index.php"
       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
     >
-      <svg class="bi me-2" width="40" height="32">
-        <use xlink:href="#bootstrap"></use>
-      </svg>
-      <span class="fs-4">ผู้จัดงาน</span>
+    <img src="/sos/newweb/uploads/asset/web/brandner.png" height="60px" alt="">
+      <span class="fs-4 px-2">ผู้จัดงาน</span>
     </a>
 
     <ul class="nav nav-pills">
@@ -50,7 +70,7 @@
   </header>
   <div class="contanier p-4">
     <div class="row text-center mb-3">
-      <h1 class=" border-bottom border-4 pb-2">บัญชีของฉัน</h1>
+      <h1 class="pb-2">บัญชีของฉัน</h1>
     </div>
     <!-- <div class="row">
 
@@ -144,15 +164,17 @@
             </div>              
           </div>
           <div class="col-sm-4">
-          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="gender">
-            <option selected>เพศ</option>
+          <div class="row py-1 px-3 mb-1 rounded">เพศ</div>
+          <select class="form-select form-select-sm mb-3" aria-label="Large select example" id="gender">
+            <option selected disabled>เพศ</option>
             <option value="ชาย">ชาย</option>
             <option value="หญิง">หญิง</option>
             <option value="ไม่ระบุ">ไม่ระบุ</option>
           </select>
           </div>
-          <div class="col-sm-4">
-          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="blood">
+          <div class="col-sm-4 text-center">
+            <div class="row py-1 px-3 mb-1 rounded">หมู่เลือด</div>
+          <select class="form-select form-select-sm mb-3 text-center" aria-label="Large select example" id="blood">
             <option selected disabled>หมู่เลือด</option>
             <option value="A">A</option>
             <option value="B">B</option>
@@ -179,14 +201,16 @@
 
         <div class="row">
           <div class="col-2">
-          <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="size">
-            <option selected disabled>ไซส์</option>
-            <option value="xs">xs</option>
-            <option value="s">s</option>
-            <option value="m">m</option>
-            <option value="l">l</option>
-            <option value="xl">xl</option>
-            <option value="2xl">2xl</option>
+          <div class="row py-1 px-3 mb-1 rounded">ไซส์เสื้อ</div>
+          <select class="form-select form-select-sm mb-3" id="size">
+            <option selected disabled>ไซส์เสื้อ</option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="2XL">2XL</option>
+            <option value="3XL">3XL</option>
           </select>
           </div>
           <div class="col-5">
@@ -224,7 +248,7 @@
  </div>
         <div class="row ">
           <button type="button" onclick="info_update()" class="btn btn-primary">
-            อัปเดทข้อมูล
+            อัปเดทข้อมูลส่วนตัว
           </button>
         </div>
       </form>
@@ -285,7 +309,7 @@
 // }
 
 
-        var info_readone =function(){
+var info_readone =function(){
           const params = new URLSearchParams(window.location.search);
           const id = params.get("id");
           const requestOptions = {
@@ -302,15 +326,37 @@
             document.getElementById("birthday").value =jsonObj.birthday;
             document.getElementById("phone").value =jsonObj.phone;
             document.getElementById("emerphone").value =jsonObj.emerphone;
-            document.getElementById("gender").value =jsonObj.gender;
-            document.getElementById("blood").value =jsonObj.blood;
-            document.getElementById("size").value =jsonObj.size;
+            // document.getElementById("gender").value =jsonObj.gender;
+            // document.getElementById("blood").value =jsonObj.blood;
+            // document.getElementById("size").value =jsonObj.size;
             document.getElementById("address").value =jsonObj.address;
             document.getElementById("province").value =jsonObj.province;
             document.getElementById("dist").value =jsonObj.dist;
             document.getElementById("subdist").value =jsonObj.subdist;
             document.getElementById("zip").value =jsonObj.zip;
 
+                // เช็คค่า jsonObj.gender แล้วตั้งค่า selected ให้กับ option ที่ตรงกัน
+            var selectGender = document.getElementById("gender");
+            for (var i = 0; i < selectGender.options.length; i++) {
+                if (selectGender.options[i].value === jsonObj.gender) {
+                    selectGender.options[i].setAttribute("selected", "selected");
+                }
+            }
+                // เช็คค่า jsonObj.blood แล้วตั้งค่า selected ให้กับ option ที่ตรงกัน
+            var selectBlood = document.getElementById("blood");
+            for (var j = 0; j < selectBlood.options.length; j++) {
+                if (selectBlood.options[j].value === jsonObj.blood) {
+                    selectBlood.options[j].setAttribute("selected", "selected");
+                }
+            }
+
+            var selectSize = document.getElementById("size");
+            for (var k = 0; k < selectSize.options.length; k++) {
+                if (selectSize.options[k].value === jsonObj.size) {
+                    selectSize.options[k].setAttribute("selected", "selected");
+                }
+            }
+            
           })
           .catch((error) => console.error(error));
         };
@@ -370,6 +416,7 @@
           dist: document.getElementById("dist").value,
           subdist: document.getElementById("subdist").value,
           zip: document.getElementById("zip").value,
+          
         });
         const requestOptions = {
           method: "PATCH",

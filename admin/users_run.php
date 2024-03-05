@@ -29,7 +29,7 @@
 
   <body onload="users_read()">
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-    <a
+  <a
       href="/sos/newweb/index.php"
       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
     >
@@ -63,11 +63,11 @@
 
     <div class="container p-4">
       <div class="row text-center mt-3">
-        <h2>ยูสเซอร์ทั้งหมดในระบบ</h2>
+        <h2>ยูสเซอร์ นักวิ่ง ในระบบ</h2>
         
     <h3>สวัสดีแอดมิน : <?php echo $_SESSION['email'] ?></h3>
       </div>
-      <div class="row mt-3 mb-3 text-center">
+      <div class="row my-3 text-center">
         <!-- <button
           type="button"
           class="btn btn-primary"
@@ -79,10 +79,10 @@
           <button class="btn btn-outline-primary" onclick="window.location.href='/sos/newweb/admin/users_org.php'">ผู้จัดงาน</button>
         </div>
         <div class="col">
-          <button class="btn btn-primary">ทั้งหมด</button>
+          <button class="btn btn-outline-primary" onclick="window.location.href='/sos/newweb/admin/users.php'">ทั้งหมด</button>
         </div>
         <div class="col">
-          <button class="btn btn-outline-primary" onclick="window.location.href='/sos/newweb/admin/users_run.php'">นักวิ่ง</button>
+          <button class="btn btn-primary">นักวิ่ง</button>
         </div>
       </div>
       <div class="row">
@@ -97,7 +97,7 @@
             </tr>
           </thead>
           <tbody id="users_table">
-            
+
           </tbody>
         </table>
       </div>
@@ -114,7 +114,7 @@
     };
     var users_table = document.getElementById("users_table");
     users_table.innerHTML = "loading...";
-    fetch("http://localhost/sos/newweb/api/users/read.php", requestOptions)
+    fetch("http://localhost/sos/newweb/api/users/readrun.php", requestOptions)
       .then((response) => response.text() )
       .then((result) => {
         users_table.innerHTML = "";
@@ -129,8 +129,8 @@
                   <td scope="col">` + user.email +`</td>
                   <td scope="col">
                     <div class="btn-group">
-                    <button class="btn-sm btn btn-warning" onclick="window.location.href='edit_user.php?id=`+user.id +`'">แก้ไข</button>
-                    <button class="btn-sm btn btn-outline-danger" onclick="users_delete(`+user.id+`)">ลบ</button>
+                      <button class="btn-sm btn btn-warning" onclick="window.location.href='edit_user.php?id=`+user.id +`'">แก้ไข</button>
+                      <button class="btn-sm btn btn-outline-danger" onclick="users_delete(`+user.id+`)">ลบ</button>
                     </div>
                   </td>
                 </tr>

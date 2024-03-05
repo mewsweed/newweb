@@ -20,8 +20,8 @@
   <body class="text-center">
     <div class="form-register">
       <form onsubmit="return false">
-        <!-- <img src="/bird-eyes-run1.jpg" height="250" alt="login"> -->
-        <h1 class="mt-3 mb-3">สมัครสมาชิกนักวิ่ง</h1>
+      <img src="/sos/newweb/uploads/asset/web/icon.png" height="250" alt="login">
+        <h1 class="mt-3 mb-3 text-primary">สมัครสมาชิกนักวิ่ง</h1>
         <div class="form-floating mb-3">
           <input
             type="text"

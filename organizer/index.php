@@ -1,63 +1,14 @@
-<?php
-  session_start();
+<?php session_start();
   if(!isset($_SESSION['role'])){
+    echo "<script>alert('ไม่พบเซสชั่น กรุณาเข้าสู่ระบบใหม่')</script>";
     header("Location: /sos/newweb/login.php");
   }else{
-    if($_SESSION['role'] !== 'organizer'){
-      header("Location: /sos/newweb/login.php");
-      exit;
+    if($_SESSION['role'] !== "organizer"){
+      echo "<script>alert('คุณไม่ใช่ผู้จัดงาน กรุณาเข้าสู่ระบบใหม่ด้วยยูสเซอร์ของผู้จัดงาน')</script>";
+      header("Location: /sos/newweb/api/logout.php");
     }
   }
-
-  if (!isset($_SESSION['email'])) {
-    // กระทำการจัดการเมื่อไม่มีอีเมลใน session
-    exit; // หรืออื่นๆ ตามการจัดการที่คุณต้องการ
-}
-
-// $email = $_SESSION['email'];
-
-// header("Access-Control-Allow-Origin: *");
-// header("Access-Control-Allow-Headers: Content-Type");
-// header("Content-Type: application/json; charset=utf-8");
-// include('../api/server.php');
-
-// try {
-//     $stmt = $dbh->prepare("SELECT * FROM events WHERE owner = ?");
-//     $stmt->execute([$email]);
-
-//     $events = array();
-
-//     foreach ($stmt as $row) {
-//         $event = array(
-//             'id' => $row['id'],
-//             'name' => $row['name'],
-//             'about' => $row['about'],
-//             'datetime' => $row['datetime'],
-//             'type' => $row['type'],
-//             'distance' => $row['distance'],
-//             'cost' => $row['cost'],
-//             'owner' => $row['owner'],
-//             'address' => $row['address'],
-//             'province' => $row['province'],
-//             'dist' => $row['dist'],
-//             'subdist' => $row['subdist'],
-//             'zip' => $row['zip'],
-//             'coverimg' => $row['coverimg'],
-//             'mapimg' => $row['mapimg'],
-//             'rewardimg' => $row['rewardimg'],
-//             'paymentimg' => $row['paymentimg'],
-//         );
-//         $events[] = $event;
-//     }
-
-//     echo json_encode($events);
-
-//     $dbh = null;
-// } catch (PDOException $e) {
-//     print "Error: " . $e->getMessage() . "<br/>";
-//     die();
-// }
-?>
+ ?>
 
 
 <!doctype html>
@@ -71,6 +22,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title><?php echo $_SESSION['role'] ?></title>
+
+    <style>
+
+body { 
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #F2FFFF;
+}
+header {
+  background-color: #fff;
+  color: rgb(88, 117, 188);
+  text-align: center;
+}
+    </style>
   </head>
   <body onload="myevent_read();">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -78,10 +43,8 @@
       href="/sos/newweb/index.php"
       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
     >
-      <svg class="bi me-2" width="40" height="32">
-        <use xlink:href="#bootstrap"></use>
-      </svg>
-      <span class="fs-4">ผู้จัดงาน</span>
+    <img src="/sos/newweb/uploads/asset/web/brandner.png" height="60px" alt="">
+      <span class="fs-4 px-2">ผู้จัดงาน</span>
     </a>
 
     <ul class="nav nav-pills">

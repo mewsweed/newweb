@@ -20,6 +20,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title><?php echo $_SESSION['role'] ?></title>
+    <style>
+body { 
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #F2FFFF;
+}
+header {
+  background-color: #fff;
+  color: rgb(88, 117, 188);
+  text-align: center;
+}
+    </style>
   </head>
   <body onload="loadevent_card()">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -27,10 +39,9 @@
       href="/sos/newweb/index.php"
       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
     >
-      <svg class="bi me-2" width="40" height="32">
-        <use xlink:href="#bootstrap"></use>
-      </svg>
-      <span class="fs-4">นักวิ่ง</span>
+    <img src="/sos/newweb/uploads/asset/web/brandner.png" height="60px" alt="">
+
+      <span class="fs-4 px-2">นักวิ่ง</span>
     </a>
 
     <ul class="nav nav-pills">
@@ -113,7 +124,7 @@
         };
       var eventcard = document.getElementById('event_list');
       eventcard.innerHTML = "loading...";
-      fetch("http://localhost/sos/newweb/api/events/readbystatus  .php", requestOptions)
+      fetch("http://localhost/sos/newweb/api/events/readbystatus.php", requestOptions)
       .then((response) => response.text())
       .then((result)=>{
         eventcard.innerHTML ="";
@@ -122,24 +133,25 @@
           var col =`
             <div class="col">
               <div class="card">
-                <img src="/sos/newweb/uploads/asset/`+event.coverimg+`" width="100%" alt="">
+                <img src="/sos/newweb/uploads/asset/`+event.owner+`/`+event.coverimg+`" width="100%" alt="">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-start">
-                    <p class="card-text">Event-name:`+event.name+`</p>
-                    <p class="card-text">Type:`+event.type+`</p>
+                    <p class="card-text">ชื่องาน:`+event.name+`</p>
+                    <p class="card-text">ประเภท:`+event.type+`</p>
                   </div>
                   
-                  <p class="card-text">About:`+event.about+`</p>
-                  <p class="card-text">Location:`+event.address+` `+event.province+`</p>
+                  <p class="card-text">วัตถุประสงค์:`+event.about+`</p>
+                  <p class="card-text">สถานที่:`+event.address+` `+event.province+`</p>
                   <div class="d-flex justify-content-between align-items-start">
-                    <p class="card-text">Distance:`+event.distance+`</p>
-                    <p class="card-text">Cost:`+event.cost+`</p>
+                    <p class="card-text">ระยะทาง:`+event.distance+`</p>
+                    <p class="card-text">ราคา:`+event.cost+`</p>
                   </div>
                   <div class="d-flex justify-content-between align-items-start">
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-outline-secondary" 
-                      onclick="window.location.href='viewevent.php?id=`+event.id+`'">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Join</button>
+                      onclick="window.location.href='viewevent.php?id=`+event.id+`'">รายละเอียด</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary"
+                      onclick="window.location.href='register.php?user_id=<?php echo $_SESSION['id']?>&event_id=`+event.id+`'">Join</button>
                     </div>
                     <small class="text-muted">`+event.datetime+`</small>
                   </div>

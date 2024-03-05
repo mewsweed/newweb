@@ -20,6 +20,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title><?php echo $_SESSION['role'] ?></title>
+
+    <style>
+body { 
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #F2FFFF;
+}
+header {
+  background-color: #fff;
+  color: rgb(88, 117, 188);
+  text-align: center;
+}
+    </style>
   </head>
   <body onload="loadmy_event();">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -27,10 +40,9 @@
       href="/sos/newweb/index.php"
       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
     >
-      <svg class="bi me-2" width="40" height="32">
-        <use xlink:href="#bootstrap"></use>
-      </svg>
-      <span class="fs-4">นักวิ่ง</span>
+    <img src="/sos/newweb/uploads/asset/web/brandner.png" height="60px" alt="">
+
+      <span class="fs-4 px-2">นักวิ่ง</span>
     </a>
 
     <ul class="nav nav-pills">
@@ -83,16 +95,21 @@
       var jsonObj =JSON.parse(result);
       for(let event of jsonObj){
         var col=`
-        <div class="card mb-3" style="max-width: 540px;">
+        <div class="card mb-3" style="max-width: 420px;">
           <div class="row g-0">
-            <div class="col-md-4">
-              <img src="..." class="img-fluid rounded-start" alt="...">
+            <div class="col-md-12">
+              <img src="/sos/newweb/uploads/asset/`+event.owner+`/`+event.coverimg+`" class="img-fluid rounded-start" alt="...">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-12">
               <div class="card-body">
-                <h5 class="card-title">`+event.event_name+`</h5>
-                <p class="card-text">สถานที่ : `+event.runNo+`</p>
-                <p class="card-text"><small class="text-body-secondary">`+event.event_datetime+`</small></p>
+                <h5 class="card-title"><span class="bg-primary text-light p-1 rounded mx-1">ชื่องาน</span>`+event.event_name+`</h5>
+                <p class="card-text"><span class="bg-primary text-light p-1 rounded mx-1">สถานที่</span> `+event.address+` `+event.province+`</p>
+                <p class="card-text d-flex justify-content-between">
+                  <span class="bg-primary text-light p-1 rounded mx-1">ระยะทาง</span>`+event.distance+`KM
+                  <span class="bg-primary text-light p-1 rounded mx-1">เลขนักวิ่ง</span>`+event.runNo+`
+                </p>
+                <p class="card-text"><span class="bg-primary text-light p-1 rounded mx-1">วันเวลางาน</span><small class="text-body-secondary">`+event.event_datetime+`</small></p>
+                <p class="card-text"><a href="viewevent.php?id=`+event.event_id+`" class="bg-success text-light p-1 rounded mx-1">ดูรายละเอียด</a></p>
               </div>
             </div>
           </div>
@@ -106,3 +123,4 @@
     .catch((error)=> console.error(error));
   }
 </script>
+<!--  -->
