@@ -280,9 +280,9 @@
             result.forEach(face => {
                 // Check if face.face is null
                 if (face.face !== null) {
-                    const imagePath = `/sos/newweb/uploads/runner/<?php echo $_SESSION["email"] ?>/${face.face}`;
+                    const imagePath = `/sos/newweb/uploads/runner/<?php echo $_SESSION["email"]?>/${face.face}`;
                     imageHTML += `<div class="col">`
-                    imageHTML += `<img src="${imagePath}" width="70px" alt="face image" >`;
+                    imageHTML += `<img src="${imagePath}" width="100px" alt="face image"  style="border-radius:50%;">`;
                     imageHTML += `</div>`
                 } else {
                     console.log("face.face is null, skipping...");

@@ -4,7 +4,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=utf-8");
     include('../server.php');
     try{
-        $stmt = $dbh->prepare("SELECT * FROM event_joined where id= ?");
+        $stmt = $dbh->prepare("SELECT * FROM event_joined where event_id= ?");
         $stmt->execute([$_GET['id']]);
         foreach ($stmt as $row){
             $join = array(

@@ -113,7 +113,7 @@
         };
       var eventcard = document.getElementById('event_list');
       eventcard.innerHTML = "loading...";
-      fetch("http://localhost/sos/newweb/api/events/read.php", requestOptions)
+      fetch("http://localhost/sos/newweb/api/events/readbystatus  .php", requestOptions)
       .then((response) => response.text())
       .then((result)=>{
         eventcard.innerHTML ="";

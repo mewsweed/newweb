@@ -99,10 +99,10 @@ if (isset($_POST['submit'])) {
             >
         </li>
         <li class="nav-item">
-            <a href="/sos/newweb/runner/user.php?id=<?php echo $_SESSION['id'] ?>" class="nav-link active">บัญชีผู้ใช้</a>
+            <a href="/sos/newweb/runner/user.php?id=<?php echo $_SESSION['id'] ?>" class="nav-link">บัญชีผู้ใช้</a>
         </li>
         <li class="nav-item">
-            <a href="/sos/newweb/runner/event.php" class="nav-link">กิจกรรมงานวิ่ง</a>
+            <a href="/sos/newweb/runner/event.php" class="nav-link active">กิจกรรมงานวิ่ง</a>
         </li>
         <li class="nav-item">
             <a href="/sos/newweb/api/logout.php" class="nav-link" >ลงชื่อออก</a>

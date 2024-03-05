@@ -21,7 +21,7 @@
 
     <title><?php echo $_SESSION['role'] ?></title>
   </head>
-  <body>
+  <body onload="loadmy_event();">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a
       href="/sos/newweb/index.php"
@@ -53,6 +53,56 @@
       </li>
     </ul>
   </header>
+
+  <div class="container text-center">
+    <div class="row">
+      <h1>ยินดีต้อนรับคุณนักวิ่ง</h1>
+    </div>
+    <div class="row">
+      <h4>นี้คือกิจกรรมที่คุณลงทะเบียน</h4>
+    </div>
+    <div class="row" id="mycard">
+]
+    </div>
+  </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>
 </html>
+<script>
+  var loadmy_event =function(){
+    const requestOptions ={
+      method: "GET",
+      redirect: "follow",
+    };
+    var event_card =document.getElementById("mycard")
+    event_card.innerHTML = "Loading..."
+    fetch("http://localhost/sos/newweb/api/join/readbyuser.php?id=<?php echo $_SESSION['id']; ?>",requestOptions)
+    .then((response) => response.text())
+    .then((result) =>{
+      event_card.innerHTML = "";
+      var jsonObj =JSON.parse(result);
+      for(let event of jsonObj){
+        var col=`
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="..." class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">`+event.event_name+`</h5>
+                <p class="card-text">สถานที่ : `+event.runNo+`</p>
+                <p class="card-text"><small class="text-body-secondary">`+event.event_datetime+`</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        `
+        event_card.insertAdjacentHTML("beforeend", col)
+
+      }
+    })
+    .catch((error)=> console.error(error));
+  }
+</script>
