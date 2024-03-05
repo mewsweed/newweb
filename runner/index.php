@@ -102,14 +102,14 @@ header {
             </div>
             <div class="col-md-12">
               <div class="card-body">
-                <h5 class="card-title"><span class="bg-primary text-light p-1 rounded mx-1">ชื่องาน</span>`+event.event_name+`</h5>
-                <p class="card-text"><span class="bg-primary text-light p-1 rounded mx-1">สถานที่</span> `+event.address+` `+event.province+`</p>
-                <p class="card-text d-flex justify-content-between">
-                  <span class="bg-primary text-light p-1 rounded mx-1">ระยะทาง</span>`+event.distance+`KM
-                  <span class="bg-primary text-light p-1 rounded mx-1">เลขนักวิ่ง</span>`+event.runNo+`
+                <h5 class="card-title"><span class="border border-2 border-primary p-1 rounded mx-2">ชื่องาน</span>`+event.event_name+`</h5>
+                <p class="card-text"><span class="border border-2 border-primary p-1 rounded mx-2">สถานที่</span> `+event.address+` `+event.province+`</p>
+                <p class="card-text d-flex justify-content-between align-items-center">
+                  <span class="border border-2 border-primary p-1 rounded mx-1">ระยะทาง</span>`+event.distance+`KM
+                  <span class="border border-2 border-primary p-1 rounded mx-1">เลขนักวิ่ง</span>`+event.runNo+`
                 </p>
-                <p class="card-text"><span class="bg-primary text-light p-1 rounded mx-1">วันเวลางาน</span><small class="text-body-secondary">`+event.event_datetime+`</small></p>
-                <p class="card-text"><a href="viewevent.php?id=`+event.event_id+`" class="bg-success text-light p-1 rounded mx-1">ดูรายละเอียด</a></p>
+                <p class="card-text"><span class="border border-2 border-primary p-1 rounded mx-2">วันเวลางาน</span><small class="text-body-secondary">`+event.event_datetime+`</small></p>
+                <p class="card-text"><a href="viewevent.php?id=`+event.event_id+`" class="btn-success text-decoration-none text-light py-1 px-2 rounded mx-1">ดูรายละเอียด</a></p>
               </div>
             </div>
           </div>
