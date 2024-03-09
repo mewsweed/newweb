@@ -69,15 +69,22 @@ header {
   </header>
   <div class="container text-center">
     <div class="row">
-      <h3>อีเว้นต์ของฉัน</h3>
+      <h2>กิจกรรมงานวิ่งของฉัน</h2>
     </div>
-    <div class="row mb-3">
-      <h5><?php echo $_SESSION['email'] ?></h5>
-        <table class="table">
-            <thead>
+    <div class="row mb-3 d-flex justify-content-center align-items-center">
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div class="btn btn-info"><h3>ผู้จัดงาน</h3></div>
+          <button class="btn btn-outline-dark" onclick="window.location.href='user.php'">
+        <h5><?php echo $_SESSION['email'] ?></h5>
+          </button>
+        </div>
+      </div>
+        <table class="table mt-3">
+            <thead  class="border border-2 border-dark">
                 <tr>
-                    <th scope="col">ไอดี</th>
                     <th scope="col">สถานะ</th>
+                    <th scope="col">ประเภท</th>
                     <th scope="col">ชื่องาน</th>
                     <th scope="col">วันเวลา</th>
                     <th scope="col">สถานที่</th>
@@ -105,21 +112,29 @@ header {
       .then((response) => response.json())
       .then((events) => {
         myevent_table.innerHTML = "";
+        if(!events){
+          myevent_table.innerHTML = "คุณยังไม่มีกิจกรรมที่จัด"
+        }else{
         events.forEach((event) => {
           var row = `
             <tr>
-              <td>${event.id}</td>
               <td>${event.status}</td>
+              <td>${event.type}</td>
               <td>${event.name}</td>
               <td>${event.datetime}</td>
               <td>${event.address} ${event.province}</td>
               <td>${event.distance}</td>
               <td>${event.cost}</td>
-              <td><button class=btn-success onclick="window.location.href='eventinfo.php?id=${event.id}'" >ผู้เข้าร่วม</button></td>
+              <td>
+                <div class="btn-group">
+                <button class='btn-info btn-sm' onclick="window.location.href='eventinfo.php?id=${event.id}'" >ผู้เข้าร่วม</button>
+                <button class='btn-warning btn-sm'onclick="window.location.href='eventinfo.php?id=${event.id}'" >แก้ไข</button>
+                </div>
+                </td>
             </tr>
           `;
           myevent_table.insertAdjacentHTML("beforeend", row);
-        });
+        });}
       })
       .catch((error) => console.error(error));
   }

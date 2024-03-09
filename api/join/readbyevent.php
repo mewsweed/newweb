@@ -5,13 +5,15 @@ header("Content-Type: application/json; charset=utf-8");
     include('../server.php');
     try{
         $stmt = $dbh->prepare("SELECT
-            ej.id, ej.user_id, ej.event_id, ej.joinAt, ej.runNo, ej.paid, ej.size, ej.ship,
-            i.fname, i.lname, i.gender, i.phone, i.emerphone
-
-            FROM event_joined AS ej
-            INNER JOIN users AS u ON ej.user_id = u.id
-            INNER JOIN info AS i ON u.id = i.user_id
-            WHERE ej.event_id =?");
+        ej.id, ej.user_id, ej.event_id, ej.joinAt, ej.runNo, ej.paid, ej.size, ej.ship,
+        i.fname, i.lname, i.gender, i.phone, i.emerphone,
+        i.address, i.province, i.dist, i.subdist, i.zip,
+        e.cost
+        FROM event_joined AS ej
+        INNER JOIN users AS u ON ej.user_id = u.id
+        INNER JOIN events AS e ON ej.event_id = e.id
+        INNER JOIN info AS i ON u.id = i.user_id
+        WHERE ej.event_id = ?");
         $stmt->execute([$_GET['id']]);
         $joins = array();
         foreach ($stmt as $row){
@@ -22,11 +24,13 @@ header("Content-Type: application/json; charset=utf-8");
                 'joinAt'=> $row['joinAt'],
                 'runNo'=> $row['runNo'],
                 'paid'=> $row['paid'],
-                'fname'=>$row['fname'],
+                'fnam`e'=>$row['fname'],
                 'lname'=>$row['lname'],
                 'gender'=>$row['gender'],
                 'phone'=>$row['phone'],
                 'emerphone'=>$row['emerphone'],
+                'ship'=>$row['ship'],
+                'cost'=>$row['cost'],
             );
             $joins[] = $join;
         }

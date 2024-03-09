@@ -180,9 +180,10 @@
                   <td scope="col">` + event.owner+`</td>
                   <td scope="col">` + event.status+`</td>
                   <td scope="col">
-                    <a href="edit/event.php?id=` +event.id +`" class="m-1">Edit</a>
-                    <a href="#" onclick="event_delete(`+event.id+`)" class="m-1">Del</a>
+                    <a class="btn btn-sm btn-warning" href="edit/event.php?id=` +event.id +`" class="m-1">Edit</a>
+                    <a class="btn btn-sm btn-danger" href="#" onclick="event_delete(`+event.id+`)" class="m-1">Del</a>
                   </td>
+
                 </tr>
             `;
           events_table.insertAdjacentHTML("beforeend", row);

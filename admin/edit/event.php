@@ -102,8 +102,8 @@ if(isset($_SESSION['role'])){
           <div class="col">
             <select class="form-select form-select-lg mb-3" id="photo" placeholder="ช่างภาพ">
                 <option selected disabled>ช่างภาพ</option>
-                <option value="ไม่รับสมัคร">ไม่รับช่างภาพ</option>
-                <option value="รับสมัคร">รับช่างภาพ</option>
+                <option value="ไม่รับ">ไม่รับช่างภาพ</option>
+                <option value="รับ">รับช่างภาพ</option>
               </select>
           </div>
         </div>
@@ -258,7 +258,7 @@ if(isset($_SESSION['role'])){
                 var photoOptions = photoSelect.options;
 
                 for (var i = 0; i < statusOptions.length; i++) {
-                    if (parseInt(photoOptions[i].value) === jsonObj.photo) {
+                    if (photoOptions[i].value === jsonObj.photo) {
                         photoOptions[i].selected = true;
                         break;
                     }
@@ -310,7 +310,7 @@ if(isset($_SESSION['role'])){
             var jsonObj = JSON.parse(result);
             if (jsonObj.status == "ok") {
               alert(jsonObj.message);
-              window.location.href = "/sos/newweb/admin/index.php"
+              window.location.href = "/sos/newweb/admin/event.php"
             } else {
               alert(jsonObj.message);
             }

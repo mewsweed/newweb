@@ -19,7 +19,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title><?php echo $_SESSION['role'] ?></title>
+    <title>Home</title>
 
     <style>
 body { 
@@ -34,7 +34,7 @@ header {
 }
     </style>
   </head>
-  <body onload="loadmy_event();">
+  <body onload="loadmy_event(); loadmyend_event();">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a
       href="/sos/newweb/index.php"
@@ -68,18 +68,28 @@ header {
 
   <div class="container text-center">
     <div class="row">
-      <h1>ยินดีต้อนรับคุณนักวิ่ง</h1>
+      <h1><span class="border-dark border-4 border-bottom py-1">ยินดีต้อนรับคุณนักวิ่ง</span></h1>
     </div>
-    <div class="row">
+    <div class="row mt-2">
       <h4>นี้คือกิจกรรมที่คุณลงทะเบียน</h4>
     </div>
     <div class="row" id="mycard">
 ]
     </div>
+    <div class="row">
+      <h4>ประวัติการเข้าร่วม</h4>
+    </div>
+    <div class="row">
+      <small>ค้นหารูปภาพของคุณ</small>
+    </div>
+    <div class="row" id="myendcard">
+
+    </div>
   </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>
 </html>
+<!--  -->
 <script>
   var loadmy_event =function(){
     const requestOptions ={
@@ -103,10 +113,10 @@ header {
             <div class="col-md-12">
               <div class="card-body">
                 <h5 class="card-title"><span class="border border-2 border-primary p-1 rounded mx-2">ชื่องาน</span>`+event.event_name+`</h5>
-                <p class="card-text"><span class="border border-2 border-primary p-1 rounded mx-2">สถานที่</span> `+event.address+` `+event.province+`</p>
+                <p class="card-text"><span class="border border-2 border-primary p-1 rounded mx-2">สถานที่</span> `+event.address+``+event.province+`</p>
                 <p class="card-text d-flex justify-content-between align-items-center">
-                  <span class="border border-2 border-primary p-1 rounded mx-1">ระยะทาง</span>`+event.distance+`KM
-                  <span class="border border-2 border-primary p-1 rounded mx-1">เลขนักวิ่ง</span>`+event.runNo+`
+                  <span class="border-top border-bottom border-2 border-primary p-1 rounded mx-1"">ระยะทาง</span>`+event.distance+`KM
+                  <span class="border-top border-bottom border-2 border-primary p-1 rounded mx-1">เลขนักวิ่ง</span>`+event.runNo+`
                 </p>
                 <p class="card-text"><span class="border border-2 border-primary p-1 rounded mx-2">วันเวลางาน</span><small class="text-body-secondary">`+event.event_datetime+`</small></p>
                 <p class="card-text"><a href="viewevent.php?id=`+event.event_id+`" class="btn-success text-decoration-none text-light py-1 px-2 rounded mx-1">ดูรายละเอียด</a></p>
@@ -124,3 +134,45 @@ header {
   }
 </script>
 <!--  -->
+<script>
+  var loadmyend_event =function(){
+    const requestOptions ={
+      method: "GET",
+      redirect: "follow",
+    };
+    var event_card =document.getElementById("myendcard")
+    event_card.innerHTML = "Loading..."
+    fetch("http://localhost/sos/newweb/api/join/readbyend.php",requestOptions)
+    .then((response) => response.text())
+    .then((result) => {
+      event_card.innerHTML = "";
+      var jsonObj =JSON.parse(result);
+      for(let event of jsonObj){
+        var col=`
+        <div class="card mb-3" style="max-width: 420px;">
+          <div class="row g-0">
+            <div class="col-md-12">
+              <img src="/sos/newweb/uploads/asset/`+event.owner+`/`+event.coverimg+`" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-12">
+              <div class="card-body">
+                <h5 class="card-title"><span class="border border-2 border-primary p-1 rounded mx-2">ชื่องาน</span>`+event.event_name+`</h5>
+                <p class="card-text"><span class="border border-2 border-primary p-1 rounded mx-2">สถานที่</span> `+event.address+``+event.province+`</p>
+                <p class="card-text d-flex justify-content-between align-items-center">
+                  <span class="border-top border-bottom border-2 border-primary p-1 rounded mx-1"">ระยะทาง</span>`+event.distance+`KM
+                  <span class="border-top border-bottom border-2 border-primary p-1 rounded mx-1">เลขนักวิ่ง</span>`+event.runNo+`
+                </p>
+                <p class="card-text"><span class="border border-2 border-primary p-1 rounded mx-2">วันเวลางาน</span><small class="text-body-secondary">`+event.event_datetime+`</small></p>
+                <p class="card-text"><a href="viewevent.php?id=`+event.event_id+`" class="btn-success text-decoration-none text-light py-1 px-2 rounded mx-1">ดูรายละเอียด</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        `
+        event_card.insertAdjacentHTML("beforeend", col)
+
+      }
+    })
+    .catch((error)=> console.error(error));
+  }
+</script>

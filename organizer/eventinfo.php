@@ -78,11 +78,15 @@ td img:hover {
             <img src="/sos/newweb/uploads/asset/<?php echo $_SESSION['email'];?>/" alt="" class="img-thumbnail" width="500px" id="coverimg">
             </div>
         </div>
-        <div class="border p-2 row text-center">
-            <div class="col-sm-4">
+        <div class="border p-2 m-2 row text-center">
+          <div class="row">
+            <div class="col-sm-4 ">
                 ชื่องาน
                 <h4 id="name"></h4>
             </div>
+
+          </div>
+          <div class="row">
             <div class="col-sm-4">
                 วันเวลา
                 <h4 id="datetime"></h4>
@@ -91,7 +95,9 @@ td img:hover {
                 ประเภท
                 <h4 id="type"></h4>
             </div>
+          </div>
         </div>
+        
         <div class="row">
         <table class="table">
           <thead>
@@ -102,6 +108,8 @@ td img:hover {
               <th scope="col">เบอร์ติดต่อ</th>
               <th scope="col">เบอร์ติดต่อฉุกเฉิน</th>
               <th scope="col">การชำระเงิน</th>
+              <th scope="col">ราคา</th>
+              <th scope="col">การจัดส่ง</th>
             </tr>
           </thead>
           <tbody id="joiner_table">
@@ -139,8 +147,10 @@ td img:hover {
             <td scope="col">`+joiner.phone+`</td>
             <td scope="col">`+joiner.emerphone+`</td>
             <td scope="col">
-              <img src="data:image;base64,`+joiner.paid+`" alt="paid" height="50px">
+            <img src="data:image;base64,`+joiner.paid+`" alt="paid" height="50px">
             </td>
+            <td scope="col">`+joiner.cost+`</td>
+            <td scope="col">`+joiner.ship+`</td>
           </tr>
         `;
         joiner_table.insertAdjacentHTML("beforeend",row);

@@ -1,3 +1,4 @@
+
 <?php
   session_start();
   if(!isset($_SESSION['role'])){
@@ -24,6 +25,11 @@
 
     <title>Runner Profile</title>
     <style>
+    
+.mew{
+  border-radius: 1rem;
+  background-color: #fafafa;
+}
 
 body { 
   font-family: 'Arial', sans-serif;
@@ -75,7 +81,7 @@ header {
     <div class="row">
 
       <div class="col-md-4">
-        <form action="/sos/newweb/api/faces/create.php" method="post" enctype="multipart/form-data" class="mt-3 mb-3 border border-2 p-4 text-center">
+        <form action="/sos/newweb/api/faces/create.php" method="post" enctype="multipart/form-data" class="mt-3 mb-3 border border-3 p-4 border-dark text-center mew">
           <h3 style="font-weight:600">อัปโหลดใบหน้า</h3>
           <input style="display: none;" type="text" name="id" id="faceId" readonly>
 
@@ -83,23 +89,31 @@ header {
             <img id="selectedImage" src="" alt=""  height="200px">
           </div>
           <div>
-            <input type="file" name="face" id="face" onchange="previewImage(event)">
+            <input type="file" name="face" id="face" class="my-4" onchange="previewImage(event)">
           </div>
-
+          
           <button class="btn btn-primary" type="submit">อัปโหลดใบหน้า</button>
         </form>
       </div>
-      <div class="col border p-4 text-center">
-          <h3>รูปใบหน้า</h3>
-          <button class="btn-sm btn-warning" onclick="resetFace(<?php echo $_SESSION['id'] ?>)">รีเซ็ทใบหน้า</button>
-        <div class="row mb-2" id="image_container">
+      <div class="col border p-4 text-center mew border-3 border-dark">
+        <div class="row">
+          <h3 style="font-weight:600">รูปใบหน้า</h3>
+          <div class="col">
+          <!-- <button class="btn-sm btn-warning" onclick="resetFace()">รีเซ็ทใบหน้า</button> -->
+          <input type="hidden" id="session_id" value="<?php echo $_SESSION['id']; ?>">
+          <input type="hidden" id="session_email" value="<?php echo $_SESSION['email']; ?>">
 
+          <button class="btn-sm btn-warning" onclick="resetFace()">รีเซ็ทใบหน้า</button>
+          </div>
+        </div>
+        <div class="row mt-4" id="image_container">
+          
+          </div>
         </div>
       </div>
-      </div>
-    
-    <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
-    <label for=""><h4 style="font-weight:600">บัญชีผู้ใช้</h4></label>
+      
+      <form onsubmit="return false" class="mt-3 mb-3 border border-3 p-4 mew border-info">
+    <label for="" class="px-2 m-2 border-bottom border-info rounded border-4"><h4 style="font-weight:600">บัญชีผู้ใช้</h4></label>
         <div class="row">
           <div class="col-sm-6" style="display:none;">
             <div class="form-floating mb-3">
@@ -130,14 +144,17 @@ header {
         </div>
 
 
-        <div class="row">
-          <button type="button" onclick="user_update()" class="btn btn-primary">
-            อัปเดทบัญชี
-          </button>
+        <div class="row text-center">
+          <div class="col">
+            <button type="button" onclick="user_update()" class="btn btn-primary px-4 py-2">
+              อัปเดทบัญชี
+            </button>
+
+          </div>
         </div>
       </form>
-      <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
-        <label for=""><h4 style="font-weight:600">ข้อมูลส่วนตัว</h4></label>
+      <form onsubmit="return false" class="mt-3 mb-3 border border-3 border-info p-4 mew">
+        <label class="mx- px-2 border-bottom border-info rounded border-4 mb-3"><h4 style="font-weight:600">ข้อมูลส่วนตัว</h4></label>
         <div class="form-floating mb-3" style="display:none">
           <input type="text" class="form-control" id="user_id" placeholder="0" readonly>
           <label for="floatingInput">ยูสเซอร์ไอดี</label>
@@ -160,7 +177,7 @@ header {
           <div class="col-md-4">
             <div class="form-floating mb-3">
               <input type="date" class="form-control" id="birthday" placeholder="birthday">
-              <label for="floatingPassword">วัน/เดือน/ปีเกิด</label>
+              <label for="floatingPassword">เดือน/วัน/ปี</label>
             </div>              
           </div>
           <div class="col-sm-4">
@@ -198,7 +215,6 @@ header {
             </div>  
           </div>
         </div>
-
         <div class="row">
         <div class="col-2">
           <div class="row py-1 px-3 mb-1 rounded">ไซส์เสื้อ</div>
@@ -240,19 +256,21 @@ header {
           </div>  
         </div>
   <div class="col-4">
+
   <div class="form-floating mb-3">
           <input type="text" class="form-control" id="zip" placeholder="zip">
           <label for="floatingPassword">ไปรษณีย์</label>
         </div>  
   </div>
  </div>
-        <div class="row ">
-          <button type="button" onclick="info_update()" class="btn btn-primary">
-            อัปเดทข้อมูล
-          </button>
-        </div>
+ <div class="row text-center ">
+   <div class="col">
+     <button type="button" onclick="info_update()" class="btn btn-primary px-4">
+      อัปเดทข้อมูล
+    </button>
+  </div>
+</div>
       </form>
-
   </div>
     <script>
         var user_readone = function () {
@@ -262,7 +280,6 @@ header {
             method: "GET",
             redirect: "follow",
           };
-
           fetch(
             "http://localhost/sos/newweb/api/users/readone.php?id=" + id,
             requestOptions
@@ -296,7 +313,7 @@ header {
                 if (face.face !== null) {
                     const imagePath = `/sos/newweb/uploads/runner/<?php echo $_SESSION["email"]?>/${face.face}`;
                     imageHTML += `<div class="col">`
-                    imageHTML += `<img src="${imagePath}" width="100px" alt="face image"  style="border-radius:50%;">`;
+                    imageHTML += `<img src="${imagePath}" width="100px" alt="face image"  style="border-radius:50%; ">`;
                     imageHTML += `</div>`
                 } else {
                     console.log("face.face is null, skipping...");
@@ -495,9 +512,12 @@ header {
 </script>
 
 <script>
-function resetFace(ownerId){
-    console.log(ownerId);
-    fetch(`http://localhost/sos/newweb/api/faces/delete.php?id=${ownerId}&email=<?php echo $_SESSION['email']?>`, {
+function resetFace(){
+  const id = document.getElementById('session_id').value;
+  const email = document.getElementById('session_email').value;
+    console.log(id);
+    console.log(email);
+    fetch(`http://localhost/sos/newweb/api/faces/delete.php?id=${id}&email=${email}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"
@@ -507,6 +527,7 @@ function resetFace(ownerId){
         if (response.ok) {
             // การลบสำเร็จ
             console.log("Face reset successfully");
+            location.reload();
             // ทำการรีเฟรชหรือดำเนินการอื่นๆ ตามที่ต้องการ
         } else {
             // การลบไม่สำเร็จ

@@ -22,7 +22,9 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Organizer Create Event</title>
+    <title>ผู้จัดกำลังจัดกิจกรรม</title>
+
+
   </head>
   <body>
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -40,8 +42,7 @@
           href="/sos/newweb/runner/index.php"
           class="nav-link"
           aria-current="page"
-          >หน้าแรก</a
-        >
+          >หน้าแรก</a>
       </li>
       <li class="nav-item">
         <a href="/sos/newweb/organizer/user.php?id=<?php echo $_SESSION['id'] ?>" class="nav-link">บัญชีผู้ใช้</a>
@@ -60,30 +61,31 @@
         <h1>สร้างกิจกรรมงานวิ่ง</h1>
       </div>
       <div class="row border p-4">
+        <label for=""><h3>1 - อัพโหลดรูปภาพ</h3></label>
       <form action="" method="post" enctype="multipart/form-data" class="mb-3" >
         <div class="row text-center" >
-          <div class="col-md">
-            <!-- <h4>ปกงาน</h4> -->
+          <div class="col-lg">
+            <h4>รูปปกงาน</h4>
             <img src="" alt="cover" class="img-thumbnail" id="coverImage">
             <input type="hidden" id="coverimgpath" value="">
           </div>
-            <div class="col-md">
-            <!-- <h4>แผนที่</h4> -->
+            <div class="col-lg">
+            <h4>แผนที่/เส้นทางวิ่ง</h4>
               <img src="" alt="map" class="img-thumbnail" id="mapImage">
               <input type="hidden" id="mapimgpath" value="">
             </div>
-            <div class="col-md">
-            <!-- <h4>รางวัล</h4> -->
+            <div class="col-lg">
+            <h4>ของรางวัล</h4>
               <img src="" alt="reward" class="img-thumbnail" id="rewardImage">
               <input type="hidden" id="rewardimgpath" value="">
             </div>
-            <div class="col-md">
-            <!-- <h4>การชำระเงิน</h4> -->
+            <div class="col-lg">
+            <h4>การชำระเงิน</h4>
               <img src="" alt="payment" class="img-thumbnail" id="paymentImage">
               <input type="hidden" id="paymentimgpath" value="">
             </div>
         </div>
-      <div class="row text-center mt-2">
+        <div class="row text-center mt-2">
           <div class="col-lg">
             <div class="mb-3">
               <label for="formFile" class="form-label"><h4>ภาพปกงาน</h4></label>
@@ -118,27 +120,20 @@
       </div>
 
       <div class="row border p-4">
-
+      <label for=""><h3>2 - กรอกรายละเอียดงาน</h3></label>
       <form onsubmit="return false">
         <div class="row">
-          <div class="col-sm-5">
+          <div class="col-sm-5" style="display:none;">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="id" placeholder="0" disabled>
               <label for="floatingInput">ไอดีคำร้องขอจัดงาน</label>
             </div>
           </div>
-          <div class="col-sm-5">
+          <div class="col-sm-5" style="display:none;">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="owner" placeholder="owner" disabled value="<?php echo $_SESSION['email'] ?>" >
               <label for="floatingPassword">ผู้จัดงาน</label>
             </div>  
-          </div>
-          <div class="col">
-            <select class="form-select form-select-lg mb-3" id="photo">
-                <option selected disabled>ช่างภาพ</option>
-                <option value="รับ">รับ</option>
-                <option value="ไม่รับ">ไม่รับ</option>
-              </select>
           </div>
         </div>
 
@@ -149,14 +144,20 @@
               <label for="floatingPassword">ชื่องาน</label>
             </div>  
           </div>
-          <div class="col-md-4">
-
+          <div class="col-md-3">
             <select class="form-select form-select-lg mb-3" id="type">
               <option selected>ประเภทงาน</option>
               <option value="เดิน">เดิน</option>
               <option value="วิ่ง">วิ่ง</option>
               <option value="มาราทอน">มาราทอน</option>
             </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select form-select-lg mb-3" id="photo">
+                <option selected disabled>ช่างภาพ</option>
+                <option value="รับ">รับ</option>
+                <option value="ไม่รับ">ไม่รับ</option>
+              </select>
           </div>
         </div>
         <div class="row">
@@ -224,7 +225,7 @@
           
           <button type="button" onclick="request_create()"
            class="btn btn-primary ">
-            แก้ไขคำร้อง
+            สร้างกิจกรรมงานวิ่ง
           </button>
           <!-- </div> -->
           <!-- <div class="col" id="delBtn">

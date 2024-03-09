@@ -33,7 +33,7 @@ header {
 }
     </style>
   </head>
-  <body onload="loadevent_card()">
+  <body onload="loadevent_card(); loadendevent_card()">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
     <a
       href="/sos/newweb/index.php"
@@ -70,7 +70,7 @@ header {
   <div class="row py-lg-5">
     <div class="col-lg-6 col-md-8 mx-auto">
       <h1 class="fw-light">งานวิ่ง</h1>
-      <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+      <p class="lead text-muted">กิจกรรมงานวิ่งที่จัดกับเว็บเรา</p>
       <p>
         <a href="#" class="btn btn-primary my-2">Main call to action</a>
         <a href="#" class="btn btn-secondary my-2">Secondary action</a>
@@ -80,37 +80,16 @@ header {
 </section>
 
 <div class="album py-5 bg-light">
+  <h3 class="mx-4">งานที่ได้รับการอนุมัติ</h3>
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3" id="event_list">
-
-            <!-- <div class="col">
-        <div class="card">
-          <img src="/sos/newweb/uploads/runner/65e33412229f7_pre-avatar.png" width="100%" alt="">
-          <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start">
-            <p class="card-text">Event-name:</p>
-            <p class="card-text">Type:</p>
-            </div>
-            <p class="card-text">About:</p>
-            <p class="card-text">Location:</p>
-            <div class="d-flex justify-content-between align-items-start">
-              <p class="card-text">Distance:</p>
-              <p class="card-text">Cost:</p>
-            </div>
-            <div class="d-flex justify-content-between align-items-start">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-              </div>
-               <small class="text-muted">Date:Time</small>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mt-1">
-               <small class="text-muted">ผู้เข้าร่วม : </small>
-               <small class="text-muted btn-sm btn-outline-warning border border-warning">สถานะ</small>
-            </div>
-          </div>
-        </div>
-      </div> -->
+    </div>
+  </div>
+</div>
+<div class="album py-5 bg-light">
+  <h3 class="mx-4">งานที่จบไปแล้ว</h3>
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3" id="eventend_list">
     </div>
   </div>
 </div>
@@ -136,15 +115,69 @@ header {
                 <img src="/sos/newweb/uploads/asset/`+event.owner+`/`+event.coverimg+`" width="100%" alt="">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-start">
-                    <p class="card-text">ชื่องาน:`+event.name+`</p>
-                    <p class="card-text">ประเภท:`+event.type+`</p>
+                    <p class="card-text"><span class="border border-2 p-1 mx-1">ชื่องาน:</span>`+event.name+`</p>
+                    <p class="card-text border p-1 border-2">ประเภท:`+event.type+`</p>
                   </div>
                   
-                  <p class="card-text">วัตถุประสงค์:`+event.about+`</p>
-                  <p class="card-text">สถานที่:`+event.address+` `+event.province+`</p>
+                  <p class="card-text"><span class="border border-2 p-1 mx-1">วัตถุประสงค์:</span>`+event.about+`</p>
+                  <p class="card-text"><span class="border border-2 p-1 mx-1">สถานที่:</span>`+event.address+` `+event.province+`</p>
                   <div class="d-flex justify-content-between align-items-start">
-                    <p class="card-text">ระยะทาง:`+event.distance+`</p>
-                    <p class="card-text">ราคา:`+event.cost+`</p>
+                    <p class="card-text"><span class="border border-2 p-1 mx-1">ระยะทาง:</span>`+event.distance+`</p>
+                    <p class="card-text"><span class="border border-2 p-1 mx-1">ราคา:</span>`+event.cost+`</p>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary" 
+                      onclick="window.location.href='viewevent.php?id=`+event.id+`'">รายละเอียด</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary"
+                      onclick="window.location.href='register.php?user_id=<?php echo $_SESSION['id']?>&event_id=`+event.id+`'">Join</button>
+                    </div>
+                    <small class="text-muted">`+event.datetime+`</small>
+                  </div>
+                  <div div class="d-flex justify-content-between align-items-center mt-1">
+                    <small class="text-muted">ผู้เข้าร่วม :  </small>
+                    <small class="text-muted btn-sm btn-outline-warning border border-warning">`+event.status+`</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            `
+          eventcard.insertAdjacentHTML("beforeend", col);
+        }
+      })
+      .catch((error)=> console.error(error));
+      }
+    </script>
+
+<script>
+      var loadendevent_card =function(){
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+      var eventcard = document.getElementById('eventend_list');
+      eventcard.innerHTML = "loading...";
+      fetch("http://localhost/sos/newweb/api/events/readbyend.php", requestOptions)
+      .then((response) => response.text())
+      .then((result)=>{
+        eventcard.innerHTML ="";
+        var jsonObj =JSON.parse(result);
+        for(let event of jsonObj){
+          var col =`
+            <div class="col">
+              <div class="card">
+                <img src="/sos/newweb/uploads/asset/`+event.owner+`/`+event.coverimg+`" width="100%" alt="">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <p class="card-text"><span class="border border-2 p-1 mx-1">ชื่องาน:</span>`+event.name+`</p>
+                    <p class="card-text border p-1 border-2">ประเภท:`+event.type+`</p>
+                  </div>
+                  
+                  <p class="card-text"><span class="border border-2 p-1 mx-1">วัตถุประสงค์:</span>`+event.about+`</p>
+                  <p class="card-text"><span class="border border-2 p-1 mx-1">สถานที่:</span>`+event.address+` `+event.province+`</p>
+                  <div class="d-flex justify-content-between align-items-start">
+                    <p class="card-text"><span class="border border-2 p-1 mx-1">ระยะทาง:</span>`+event.distance+`</p>
+                    <p class="card-text"><span class="border border-2 p-1 mx-1">ราคา:</span>`+event.cost+`</p>
                   </div>
                   <div class="d-flex justify-content-between align-items-start">
                     <div class="btn-group">

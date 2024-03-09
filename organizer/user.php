@@ -39,7 +39,7 @@ header {
   </head>
   <!-- face_readone(); -->
   <body onload="user_readone(); info_readone(); ">
-  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-2 border-bottom">
     <a
       href="/sos/newweb/index.php"
       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
@@ -102,7 +102,7 @@ header {
     </div> -->
     
       <form onsubmit="return false" class="mt-3 mb-3 border border-2 p-4">
-        <div class="row">
+        <div class="row" style="display:none;">
           <div class="col-sm-6">
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="id" placeholder="0" readonly>

@@ -49,10 +49,12 @@
 //     http_response_code(500); // Internal Server Error
 //     echo json_encode(array("status" => "error", "message" => "Database error: " . $e->getMessage()));
 // }
+
+
 session_start();
 header("Access-Control-Allow-Origin: * ");
 header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Allow-Methods: DELETE");
+header("Access-Control-Allow-Methods: DELETE, OPTION");
 header("Content-Type: application/json; charset=utf-8");
 include('../server.php');
 
@@ -65,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] !== "DELETE") {
 // Ensure the request includes the ID of the face to be deleted
 if (!isset($_GET['id'])) {
     http_response_code(400); // Bad Request
-    echo json_encode(array("status" => "error", "message" => "Missing face ID."));
+    echo json_encode(array("status" => "error", "message" => "Missing user ID."));
     exit();
 }
 
@@ -87,7 +89,7 @@ try {
         }
     }
 
-    // ลบข้อมูลรูปภาพในฐานข้อมูลทั้งหมดที่มี user_id ที่ตรงกับเงื่อนไข
+    // ลบข้อมูลรูปภาพในฐานข้อมูลทั้งหมด
     $stmt_del = $dbh->prepare("DELETE FROM face WHERE user_id = ?");
     $stmt_del->bindParam(1, $user_id);
 

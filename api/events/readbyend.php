@@ -4,7 +4,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=utf-8");
 include('../server.php');
 try {
-    $stmt = $dbh->prepare("SELECT * FROM events WHERE status = 'อนุมัติ' && DATE (datetime) >= CURDATE()");
+    $stmt = $dbh->prepare("SELECT * FROM events WHERE DATE (datetime) < CURDATE()");
     $stmt->execute();
 
     $events = array();

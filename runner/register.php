@@ -22,6 +22,7 @@ if (isset($_POST['submit'])) {
             // header("Location: /sos/newweb/runner/index.php");
             // exit();
         } else {
+          
             $file_tmp = $_FILES['paid']['tmp_name'];
             // อ่านขนาดของไฟล์
             $file_size = $_FILES['paid']['size'];
@@ -161,42 +162,7 @@ header {
             <h3>การชำระเงิน</h3>
             <img src="" alt="reward"  class="img-thumbnail" id="rewardimg">
         </div>
-        <div class="col-sm-4 d-flex justify-content-center align-items-center">
-            <form action="" method="POST" enctype="multipart/form-data">
-                <h3>ฟอร์มสมัครเข้าร่วม</h3>
-                <input type="hidden" name="user_id" id="user_regis_id">
-                <input type="hidden" name="event_id" id="event_regis_id">
-                <div class="col">
-                    <label for="size" class="m-2">ไซส์</label>
-                    <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="size" name="size">
-                        <option selected disabled>ไซส์</option>
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                        <option value="2XL">2XL</option>
-                        <option value="3XL">3XL</option>
-                    </select>
-                </div>
-                <div class="col">
-                    <label for="ship" class="m-2">การรับของ</label>
-                    <select class="form-select form-select-lg mb-3" aria-label="Large select example" id="ship" name="ship">
-                        <option selected disabled>การรับของ</option>
-                        <option value="รับหน้างาน">รับหน้างาน</option>
-                        <option value="จัดส่งตามที่อยู่">จัดส่งตามที่อยู่</option>
-                    </select>
-                </div>
-                <div class="col border p-2">
-                        <label for=""><h5>อัปโหลดสลิปที่นี้</h5></label>
-                        <input type="file" name="paid" id="face" accept="jpg" onchange="previewImage(event)">
-                </div>
-                <div class="col p-2">
-                    <input type="submit" name="submit" class="btn btn-primary" value="ยืนยันการสมัคร">
-                </div>
-            </form>
-            
-        </div>
+
         <div class="col-sm-4">
             <h3>ตัวอย่างเสื้อ</h3>
             <img src="/sos/newweb/uploads/asset/desktop-1920x1080.jpg" alt="payment"  class="img-thumbnail" id="paymentimg">

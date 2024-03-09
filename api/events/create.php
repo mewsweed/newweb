@@ -13,6 +13,22 @@
 
 
     try{
+        if($data->coverimg ==="undefined"){
+            echo json_encode(array("status"=>"error", "message"=>"คุณยังไม่ได้อัพโหลดไฟล์ภาพปก"));  
+            die();
+        }
+        if(!$data->mapimg ==="undefined"){
+            echo json_encode(array("status"=>"error", "message"=>"คุณยังไม่ได้อัพโหลดไฟล์ภาพปก"));  
+            die();
+        }
+        if(!$data->rewardimg ==="undefined"){
+            echo json_encode(array("status"=>"error", "message"=>"คุณยังไม่ได้อัพโหลดไฟล์ภาพปก"));  
+            die();
+        }
+        if(!$data->paymentimg ==="undefined"){
+            echo json_encode(array("status"=>"error", "message"=>"คุณยังไม่ได้อัพโหลดไฟล์ภาพปก"));  
+            die();
+        }
         $stmt = $dbh->prepare("INSERT INTO events (
              name, about, type, datetime, distance, cost, owner, 
              address, province, dist, subdist, zip, 
